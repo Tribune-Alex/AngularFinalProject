@@ -1,5 +1,8 @@
-@for (info of train() ; track info.id) {
-    <app-train-card-components [gettrain]="info">
-
-    </app-train-card-components>
-}
+<app-train-card-components
+  [trains]="query()
+    ? (searchNumber.value()?.data?.items ?? [])
+    : (trains.value()?.data?.items ?? [])"
+  [selectedTrain]="selectedTrain.value()?.data ?? null"
+  (transSelected)="selectTrain($event)"
+  (search)="searchInput($event)"
+></app-train-card-components>

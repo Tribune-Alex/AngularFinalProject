@@ -1,17 +1,35 @@
 import { inject, Service, signal } from '@angular/core';
-import { Train } from '../models/trainmodels';
+import { Train, TrainDetailsResponse, TrainsResponse } from '../models/trainmodels';
 import { HttpClient } from '@angular/common/http';
 
 @Service()
 export class Trainservice {
     public url:string="https://trainsapi.stepacademy.ge/api/trains"
-    public trainget=signal<Train[]>([])
+    public searchUrl:string="https://trainsapi.stepacademy.ge/api/trains/search"
+    
 
     private http=inject(HttpClient)
 
-    constructor(){
-        this.http.get<Train[]>(this.url).subscribe((data:Train[])=>{
-            this.trainget.set(data)
-        })
-    }
+    
+    getTrains(){
+        return this.http.get<TrainsResponse>(this.url)
+      }
+      getTrainById(id:number){
+        return this.http.get<TrainDetailsResponse>(
+          `${this.url}/${id}`
+        )
+      }
+
+      searchTrainByNumber(query: string) {
+        return this.http.get<TrainsResponse>(
+          this.searchUrl,
+          {
+            params: {
+              query: query,
+              Take: 10,
+              Page: 1
+            }
+          }
+        );
+      }
 }

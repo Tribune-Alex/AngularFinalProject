@@ -1,5 +1,5 @@
-import { Component, input } from '@angular/core';
-import { Train } from '../../models/trainmodels';
+import { Component, input, output } from '@angular/core';
+import { Train, TrainDetails } from '../../models/trainmodels';
 
 @Component({
   imports: [],
@@ -8,5 +8,14 @@ import { Train } from '../../models/trainmodels';
   templateUrl: './train-card-components.html',
 })
 export class TrainCardComponents {
-  public gettrain=input.required<Train>()
+  trains = input<Train[]>([])
+  selectedTrain = input<TrainDetails | null>(null)
+  transSelected = output<number>()
+  search = output<string>();
+  selectTrain(id: number): void {
+    this.transSelected.emit(id)
+  }
+  searchTrain(keyword: string): void {
+    this.search.emit(keyword);
+  }
 }

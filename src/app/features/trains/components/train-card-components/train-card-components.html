@@ -1,3 +1,32 @@
-<h2>{{gettrain().name}}</h2>
+<div class="trains">
+    @for (train of trains(); track $index) {
+        <div>
+            <img [src]="train.thumbnail" alt="" style="width: 300px;">
+            <h3>Number:{{train.number}}</h3>
+            <p>Coaches:{{train.coachesCount}}</p>
+            <p>Seats:{{train.totalSeats}}</p>
+
+            <button (click)="selectTrain(train.id)">დეტალური ინფორმაცია</button>
+        </div>
+    }
+</div>
+
+<input
+  type="text"
+  placeholder="Введите номер поезда"
+  (input)="searchTrain($any($event.target).value)"
+>
+
+@if(selectedTrain(); as train){
+    <div>
+        {{train.name}}
+        <p>{{train.number}}</p>
+
+        @for (schedule of train.schedules; track $index) {
+            <p>{{schedule.origin}}</p>
+            <p>{{schedule.destination}}</p>
+        }
+    </div>
+}
 
 

@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Trainservice } from '../../services/trainservice';
 import { TrainCardComponents } from '../../components/train-card-components/train-card-components';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   imports: [TrainCardComponents],
@@ -10,5 +11,37 @@ import { TrainCardComponents } from '../../components/train-card-components/trai
 })
 export class Traincomponents {
   public trainService=inject(Trainservice)
-  public train=this.trainService.trainget
+  public selectedTrainId = signal<number>(1);
+  query = signal<string | undefined>(undefined);
+  public trains = rxResource({
+    stream: () => this.trainService.getTrains(),
+  });
+
+  selectedTrain = rxResource({
+    params: () => this.selectedTrainId(),
+    stream: ({ params }) => this.trainService.getTrainById(params),
+  });
+
+  selectTrain(id: number): void {
+    this.selectedTrainId.set(id);
+  }
+
+
+
+  
+
+  searchNumber = rxResource({
+    params: () => this.query(),
+  
+    stream: ({ params }) => {
+      console.log('QUERY TO API:', params);
+  
+      return this.trainService.searchTrainByNumber(params);
+    }
+  });
+  
+  searchInput(keyword: string): void {
+    console.log('INPUT:', keyword);
+    this.query.set(keyword);
+  }
 }
