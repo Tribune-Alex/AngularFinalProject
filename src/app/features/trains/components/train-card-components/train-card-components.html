@@ -1,32 +1,151 @@
-<div class="trains">
-    @for (train of trains(); track $index) {
-        <div>
-            <img [src]="train.thumbnail" alt="" style="width: 300px;">
-            <h3>Number:{{train.number}}</h3>
-            <p>Coaches:{{train.coachesCount}}</p>
-            <p>Seats:{{train.totalSeats}}</p>
+<div class="page">
 
-            <button (click)="selectTrain(train.id)">დეტალური ინფორმაცია</button>
-        </div>
-    }
-</div>
-
-<input
-  type="text"
-  placeholder="Введите номер поезда"
-  (input)="searchTrain($any($event.target).value)"
->
-
-@if(selectedTrain(); as train){
-    <div>
-        {{train.name}}
-        <p>{{train.number}}</p>
-
-        @for (schedule of train.schedules; track $index) {
-            <p>{{schedule.origin}}</p>
-            <p>{{schedule.destination}}</p>
-        }
+    <div class="page-header">
+        <span class="eyebrow">EXPLORE</span>
+        <h1>Train Routes</h1>
+        <p>Find trains by number and view detailed route information.</p>
     </div>
-}
+
+    <div class="divider"></div>
+
+    <div class="layout">
+
+        <aside class="sidebar">
+            <div class="search-box">
+                <h3>SEARCH</h3>
+
+                <label>TRAIN NUMBER</label>
+
+                <input type="text" placeholder="e.g. Express, 42" (input)="searchTrain($any($event.target).value)">
+            </div>
+
+            <div class="filter-box">
+
+                <h3>FILTER BY ROUTE</h3>
+
+                <label>FROM</label>
+
+                <select (change)="
+                                selectFromStation(+$any($event.target).value);
+                                selectFromStationName(
+                                    $any($event.target).options[$any($event.target).selectedIndex].text
+                                )
+                        ">
+                    <option value="">Any origin</option>
+
+                    @for (station of stations(); track station.id) {
+                    <option [value]="station.id">
+                        {{ station.name }}
+                    </option>
+                    }
+                </select>
+
+                <label>TO</label>
+
+                <select (change)="
+    selectToStation(+$any($event.target).value);
+    selectToStationName(
+      $any($event.target).options[$any($event.target).selectedIndex].text
+    )
+  ">
+                    <option value="">Any destination</option>
+
+                    @for (station of toStations(); track station.id) {
+                    <option [value]="station.id">
+                        {{ station.name }}
+                    </option>
+                    }
+                </select>
+                <button (click)="applyFilter()">
+                    Apply Filter
+                  </button>
+
+            </div>
+        </aside>
+
+        <main class="content">
+
+            <div class="trains">
+                @for (train of trains(); track $index) {
+
+                <div class="train-card">
+
+                    <img [src]="train.thumbnail" [alt]="train.number">
+
+                    <div class="train-info">
+
+                        <div class="train-top">
+                            <span class="train-number">
+                                #{{ train.number }}
+                            </span>
+
+                            <span class="coaches">
+                                {{ train.coachesCount }} coaches
+                            </span>
+                        </div>
+
+                        <h3>
+                            {{ train.name }}
+                        </h3>
+
+                        <p class="seats">
+                            {{ train.totalSeats }} seats
+                        </p>
+
+                        <button (click)="selectTrain(train.id)">
+                            დეტალური ინფორმაცია
+                        </button>
+
+                    </div>
+
+                </div>
+
+                }
+            </div>
 
 
+            @if(selectedTrain(); as train){
+
+            <div class="selected-train">
+
+                <span class="eyebrow">SELECTED TRAIN</span>
+
+                <h2>
+                    {{ train.name }}
+                </h2>
+
+                <p class="selected-number">
+                    #{{ train.number }}
+                </p>
+
+                @for (schedule of train.schedules; track $index) {
+
+                <div class="route">
+
+                    <div>
+                        <span>FROM</span>
+                        <strong>{{ schedule.origin }}</strong>
+                    </div>
+
+                    <div class="route-arrow">
+                        →
+                    </div>
+
+                    <div>
+                        <span>TO</span>
+                        <strong>{{ schedule.destination }}</strong>
+                    </div>
+
+                </div>
+
+                }
+
+            </div>
+
+            }
+
+        </main>
+
+    </div>
+
+</div>

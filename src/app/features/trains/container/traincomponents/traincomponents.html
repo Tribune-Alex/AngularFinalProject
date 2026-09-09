@@ -1,8 +1,12 @@
-<app-train-card-components
-  [trains]="query()
+<app-train-card-components [trains]="
+  query()
     ? (searchNumber.value()?.data?.items ?? [])
-    : (trains.value()?.data?.items ?? [])"
-  [selectedTrain]="selectedTrain.value()?.data ?? null"
-  (transSelected)="selectTrain($event)"
-  (search)="searchInput($event)"
-></app-train-card-components>
+    : filterActive()
+      ? (filteredTrains.value()?.data?.items ?? [])
+      : (trains.value()?.data?.items ?? [])
+" [stations]="stations.value()?.data ?? []" [toStations]="toStations.value()?.data ?? []"
+    [selectedTrain]="selectedTrain.value()?.data ?? null" (transSelected)="selectTrain($event)"
+    (search)="searchInput($event)" (fromStationSelected)="selectFromStation($event)"
+    (fromStationNameSelected)="selectFromStationName($event)" (toStationSelected)="selectToStation($event)"
+    (toStationNameSelected)="selectToStationName($event)"
+    (applyFilterSelected)="applyFilter()"></app-train-card-components>

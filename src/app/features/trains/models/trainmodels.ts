@@ -45,3 +45,13 @@ export interface Train {
   export interface TrainDetailsResponse {
     data: TrainDetails;
   }
+
+
+  export interface Station {
+    id: number;
+    name: string;
+  }
+  
+  export interface StationsResponse {
+    data: Station[];
+  }
