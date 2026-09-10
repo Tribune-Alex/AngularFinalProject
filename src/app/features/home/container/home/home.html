@@ -1,0 +1,173 @@
+<section class="home-page">
+
+    <div class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                STEP TRAINS
+            </div>
+
+            <h1>
+                Travel Smarter,
+                <br>
+                Journey Farther
+            </h1>
+
+            <p class="hero-description">
+                Search thousands of train routes and book your seats in seconds.
+            </p>
+
+
+            <div class="search-box">
+
+                <div class="search-field">
+                    <span class="label">FROM</span>
+                  
+                    <select
+                      [value]="fromStation()"
+                      (change)="fromStation.set($any($event.target).value)"
+                    >
+                      <option value="">
+                        Origin city or station
+                      </option>
+                  
+                      @for (station of stations.value()?.data ?? []; track station.id) {
+                        <option [value]="station.name">
+                          {{ station.name }}
+                        </option>
+                      }
+                    </select>
+                  </div>
+
+                <div class="arrow">
+                    →
+                </div>
+
+                <div class="search-field">
+                    <span class="label">TO</span>
+                  
+                    <select
+                      [value]="toStation()"
+                      (change)="toStation.set($any($event.target).value)"
+                    >
+                      <option value="">
+                        Destination city or station
+                      </option>
+                  
+                      @for (station of stations.value()?.data ?? []; track station.id) {
+                        <option [value]="station.name">
+                          {{ station.name }}
+                        </option>
+                      }
+                    </select>
+                  </div>
+
+                  <button
+                  class="search-button"
+                  (click)="searchTrains()"
+                >
+                  Search
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="advantages">
+
+        <div class="advantage-card">
+
+            <div class="advantage-icon">
+                ◫
+            </div>
+
+            <h3>Multiple Classes</h3>
+
+            <p>
+                Choose from First, Business, or Second class coaches on every train.
+            </p>
+
+        </div>
+
+
+        <div class="advantage-card">
+
+            <div class="advantage-icon">
+                □
+            </div>
+
+            <h3>Flexible Dates</h3>
+
+            <p>
+                Pick any future travel date when booking — change it anytime before departure.
+            </p>
+
+        </div>
+
+
+        <div class="advantage-card">
+
+            <div class="advantage-icon">
+                ♧
+            </div>
+
+            <h3>Choose Your Seat</h3>
+
+            <p>
+                Pick the exact seat you want from a live map of available seats.
+            </p>
+
+        </div>
+
+
+        <div class="advantage-card">
+
+            <div class="advantage-icon">
+                ✓
+            </div>
+
+            <h3>Instant Confirmation</h3>
+
+            <p>
+                Your booking is confirmed immediately. View and manage all trips in your profile.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="cta">
+
+        <h2>
+            Ready to book your journey?
+        </h2>
+
+        <p>
+            Browse all available trains and schedules, then choose your seat.
+        </p>
+
+        <div class="cta-buttons">
+
+            <button class="browse-button" (click)="goTrains()">
+                Browse Trains
+            </button>
+
+            <button class="account-button" (click)="goRegister()">
+                Create Account
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <footer>
+        <a href="https://ge.itstep.org/">By It Step Academy Georgia</a> 
+    </footer>
+
+</section>

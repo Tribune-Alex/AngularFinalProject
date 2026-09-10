@@ -1,12 +1,24 @@
-<app-train-card-components [trains]="
-  query()
-    ? (searchNumber.value()?.data?.items ?? [])
-    : filterActive()
-      ? (filteredTrains.value()?.data?.items ?? [])
-      : (trains.value()?.data?.items ?? [])
-" [stations]="stations.value()?.data ?? []" [toStations]="toStations.value()?.data ?? []"
-    [selectedTrain]="selectedTrain.value()?.data ?? null" (transSelected)="selectTrain($event)"
-    (search)="searchInput($event)" (fromStationSelected)="selectFromStation($event)"
-    (fromStationNameSelected)="selectFromStationName($event)" (toStationSelected)="selectToStation($event)"
-    (toStationNameSelected)="selectToStationName($event)"
-    (applyFilterSelected)="applyFilter()"></app-train-card-components>
+<app-train-card-components
+  [trains]="
+    query()
+      ? (searchNumber.value()?.data?.items ?? [])
+      : filterActive()
+        ? (filteredTrains.value()?.data?.items ?? [])
+        : (trains.value()?.data?.items ?? [])
+  "
+  [stations]="stations.value()?.data ?? []"
+  [toStations]="toStations.value()?.data ?? []"
+
+  [fromStationName]="fromStationName()"
+  [toStationName]="toStationName()"
+
+  [selectedTrain]="selectedTrain.value()?.data ?? null"
+
+  (transSelected)="selectTrain($event)"
+  (search)="searchInput($event)"
+  (fromStationSelected)="selectFromStation($event)"
+  (fromStationNameSelected)="selectFromStationName($event)"
+  (toStationSelected)="selectToStation($event)"
+  (toStationNameSelected)="selectToStationName($event)"
+  (applyFilterSelected)="applyFilter()"
+></app-train-card-components>

@@ -1,0 +1,98 @@
+<div class="verify-page">
+
+    <div class="verify-left">
+
+        <div class="brand-icon">
+            🧳
+        </div>
+
+        <h1>Almost There!</h1>
+
+        <p class="left-subtitle">
+            Just one more step to start booking your train tickets.
+        </p>
+
+        <div class="features">
+
+            <div class="feature">
+                <div class="feature-icon">🛡</div>
+
+                <div>
+                    <h3>Secure Account</h3>
+                    <p>Your account security is our priority</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+
+                <div>
+                    <h3>Quick Process</h3>
+                    <p>Verification takes less than a minute</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">♙</div>
+
+                <div>
+                    <h3>Join the Community</h3>
+                    <p>50,000+ verified travelers</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="verify-right">
+
+        <div class="verify-content">
+
+            <div class="email-icon">
+                ✉
+            </div>
+
+            <h2>Verify Your Email</h2>
+
+            <p class="subtitle">
+                We've sent a 6-digit code to your email address
+            </p>
+
+            <form (submit)="$event.preventDefault(); submitVerify()">
+
+                <div class="code-input">
+
+                    <span>♙</span>
+
+                    <input type="text" maxlength="6" placeholder="Enter 6-digit code" [value]="code()"
+                        (input)="code.set($any($event.target).value)">
+
+                </div>
+
+                <button type="submit">
+                    ✓ &nbsp; Verify Email
+                </button>
+
+            </form>
+
+            <div class="separator"></div>
+
+            <div class="resend">
+                <p>Didn't receive the code?</p>
+
+                <span class="resend-code" (click)="resendCode()">
+                    Resend code
+                </span>
+            </div>
+
+            <div class="back-login">
+                ← &nbsp; Back to Login
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

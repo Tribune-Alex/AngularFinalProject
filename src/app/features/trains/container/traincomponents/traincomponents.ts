@@ -1,7 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { Trainservice } from '../../services/trainservice';
 import { TrainCardComponents } from '../../components/train-card-components/train-card-components';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   imports: [TrainCardComponents],
@@ -10,7 +11,8 @@ import { rxResource } from '@angular/core/rxjs-interop';
   templateUrl: './traincomponents.html',
 })
 export class Traincomponents {
-  public trainService=inject(Trainservice)
+  public trainService=inject(Trainservice);
+  private route = inject(ActivatedRoute);
   public stations = this.trainService.stations;
   public toStations = this.trainService.toStations;
   public selectedTrainId = signal<number>(1);
@@ -34,8 +36,31 @@ export class Traincomponents {
     this.selectedTrainId.set(id);
   }
 
-
-
+  constructor() {
+    const from = this.route.snapshot.queryParamMap.get('from');
+    const to = this.route.snapshot.queryParamMap.get('to');
+  
+    if (from && to) {
+      this.fromStationName.set(from);
+      this.toStationName.set(to);
+  
+      this.filterActive.set(true);
+      this.filterRequested.update(value => value + 1);
+  
+      effect(() => {
+        const stations = this.stations.value()?.data ?? [];
+  
+        const station = stations.find(
+          item => item.name === from
+        );
+  
+        if (station) {
+          this.fromStationId.set(station.id);
+          this.trainService.fromStationId.set(station.id);
+        }
+      });
+    }
+  }
   
 
   searchNumber = rxResource({
@@ -79,21 +104,26 @@ export class Traincomponents {
   }
 
   applyFilter(): void {
+
+    if (
+      this.fromStationName() === 'Any origin' ||
+      this.toStationName() === 'Any destination'
+    ) {
+      this.filterActive.set(false);
+      return;
+    }
+  
     this.filterActive.set(true);
     this.filterRequested.update(value => value + 1);
   }
 
   public filteredTrains = rxResource({
-    params: () => ({
-      trigger: this.filterRequested(),
-      origin: this.fromStationName(),
-      destination: this.toStationName()
-    }),
+    params: () => this.filterRequested(),
   
-    stream: ({ params }) => {
+    stream: () => {
       return this.trainService.filterTrains(
-        params.origin,
-        params.destination
+        this.fromStationName(),
+        this.toStationName()
       );
     }
   });

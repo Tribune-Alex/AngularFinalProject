@@ -1,0 +1,64 @@
+<nav class="navbar">
+
+    <!-- LEFT: LOGO -->
+    <div class="navbar-brand">
+
+        <span class="train-icon">
+            🚆
+        </span>
+
+        <span class="step">
+            STEP
+        </span>
+
+        <span class="trains">
+            TRAINS
+        </span>
+
+    </div>
+
+
+    <!-- CENTER: NAVIGATION -->
+    <div class="navbar-links">
+
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            Home
+        </a>
+
+        <a routerLink="/trains" routerLinkActive="active">
+            Trains
+        </a>
+
+    </div>
+
+
+    <!-- RIGHT: AUTH -->
+    <div class="navbar-auth">
+
+        @if (!isLoggedIn()) {
+
+        <button class="sign-in" (click)="goLogin()">
+            Sign In
+        </button>
+
+        <button class="get-started" (click)="goRegister()">
+            Get Started
+        </button>
+
+        }
+
+        @if (isLoggedIn()) {
+
+        <button class="sign-in">
+            Profile
+        </button>
+
+        <button class="get-started" (click)="logout()">
+            Logout
+        </button>
+
+        }
+
+    </div>
+
+</nav>

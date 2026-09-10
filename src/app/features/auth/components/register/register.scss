@@ -1,0 +1,301 @@
+:host {
+    display: block;
+  }
+  
+  .register-page {
+    min-height: 100vh;
+  
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  
+    background: #0b1124;
+  }
+  
+  .register-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  
+    padding: 80px 150px;
+  
+    background:
+      linear-gradient(
+        rgba(6, 11, 22, 0.88),
+        rgba(6, 11, 22, 0.88)
+      ),
+      linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 1px
+      );
+  
+    background-size:
+      auto,
+      56px 56px,
+      56px 56px;
+  }
+  
+  .brand-icon {
+    width: 90px;
+    height: 90px;
+  
+    margin: 0 auto 45px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    background: #d6ad48;
+  
+    border-radius: 18px;
+  
+    font-size: 38px;
+  
+    box-shadow:
+      0 0 30px rgba(214, 173, 72, 0.25);
+  }
+  
+  .register-left h1 {
+    margin: 0;
+  
+    text-align: center;
+  
+    color: #f7f4ed;
+  
+    font-size: 54px;
+    font-weight: 800;
+    letter-spacing: 2px;
+  }
+  
+  .brand-description {
+    max-width: 550px;
+  
+    margin: 30px auto 60px;
+  
+    text-align: center;
+  
+    color: #746b54;
+  
+    font-size: 18px;
+    line-height: 1.8;
+  }
+  
+  .features {
+    display: flex;
+    flex-direction: column;
+  
+    gap: 25px;
+  }
+  
+  .feature {
+    display: flex;
+    align-items: center;
+  
+    gap: 18px;
+  
+    .feature-icon {
+      width: 54px;
+      height: 54px;
+  
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  
+      background: rgba(255, 255, 255, 0.1);
+      color: #d6ad48;
+  
+      border-radius: 12px;
+  
+      font-size: 26px;
+    }
+  
+    h3 {
+      margin: 0 0 8px;
+  
+      color: #f4f0e8;
+  
+      font-size: 17px;
+    }
+  
+    p {
+      margin: 0;
+  
+      color: #6f6754;
+  
+      font-size: 14px;
+    }
+  }
+  
+  .register-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    padding: 80px;
+  
+    background: #0b1124;
+  }
+  
+  .register-content {
+    width: 100%;
+    max-width: 650px;
+  }
+  
+  .user-icon {
+    width: 72px;
+    height: 72px;
+  
+    margin: 0 auto 35px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    border: 1px solid #6d6040;
+    border-radius: 14px;
+  
+    color: #d6ad48;
+  
+    font-size: 28px;
+  }
+  
+  .register-content h2 {
+    margin: 0;
+  
+    text-align: center;
+  
+    color: #f5f1e8;
+  
+    font-size: 34px;
+  }
+  
+  .subtitle {
+    margin: 18px 0 48px;
+  
+    text-align: center;
+  
+    color: #d0b774;
+  
+    font-size: 15px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  
+    gap: 20px;
+  }
+  
+  .name-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  
+    gap: 16px;
+  }
+  
+  input {
+    width: 100%;
+    height: 58px;
+  
+    box-sizing: border-box;
+  
+    padding: 0 18px;
+  
+    background: #10192c;
+    color: #f5f1e8;
+  
+    border: 1px solid #33415f;
+    border-radius: 9px;
+  
+    outline: none;
+  
+    font-size: 15px;
+  
+    transition: 0.2s;
+  
+    &::placeholder {
+      color: #9a8766;
+    }
+  
+    &:focus {
+      border-color: #d6ad48;
+  
+      box-shadow:
+        0 0 0 3px rgba(214, 173, 72, 0.08);
+    }
+  }
+  
+  button {
+    height: 66px;
+  
+    margin-top: 28px;
+  
+    background: #d6ad48;
+    color: white;
+  
+    border: none;
+    border-radius: 9px;
+  
+    font-size: 16px;
+    font-weight: 700;
+  
+    cursor: pointer;
+  
+    transition: 0.2s;
+  
+    &:hover {
+      background: #e0b954;
+  
+      transform: translateY(-1px);
+  
+      box-shadow:
+        0 10px 25px rgba(214, 173, 72, 0.15);
+    }
+  }
+  
+  .signin-text {
+    margin-top: 35px;
+  
+    text-align: center;
+  
+    color: #d2bc83;
+  
+    span {
+      color: #d6ad48;
+  
+      cursor: pointer;
+      font-weight: 600;
+    }
+  }
+  
+  @media (max-width: 1000px) {
+  
+    .register-page {
+      grid-template-columns: 1fr;
+    }
+  
+    .register-left {
+      display: none;
+    }
+  
+    .register-right {
+      padding: 40px 20px;
+    }
+  
+  }
+  
+  @media (max-width: 600px) {
+  
+    .name-row {
+      grid-template-columns: 1fr;
+    }
+  
+    .register-content h2 {
+      font-size: 28px;
+    }
+  
+  }

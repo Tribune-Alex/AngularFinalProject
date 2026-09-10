@@ -1,0 +1,117 @@
+<div class="register-page">
+
+    <div class="register-left">
+  
+      <div class="brand-icon">
+        🧳
+      </div>
+  
+      <h1>STEP TRAINS</h1>
+  
+      <p class="brand-description">
+        Your trusted platform for booking train tickets across the country.
+      </p>
+  
+      <div class="features">
+  
+        <div class="feature">
+          <div class="feature-icon">✓</div>
+  
+          <div>
+            <h3>Easy Booking</h3>
+            <p>Book your train tickets in just a few clicks</p>
+          </div>
+        </div>
+  
+        <div class="feature">
+          <div class="feature-icon">ϟ</div>
+  
+          <div>
+            <h3>Instant Confirmation</h3>
+            <p>Get your tickets confirmed right away</p>
+          </div>
+        </div>
+  
+        <div class="feature">
+          <div class="feature-icon">◇</div>
+  
+          <div>
+            <h3>Secure Payments</h3>
+            <p>Your payment information is always protected</p>
+          </div>
+        </div>
+  
+      </div>
+  
+    </div>
+  
+  
+    <div class="register-right">
+  
+      <div class="register-content">
+  
+        <div class="user-icon">
+          ♙
+        </div>
+  
+        <h2>Create your account</h2>
+  
+        <p class="subtitle">
+          Join thousands of travelers today
+        </p>
+  
+  
+        <form (submit)="$event.preventDefault(); submitRegister()">
+  
+          <div class="name-row">
+  
+            <input
+              type="text"
+              placeholder="First name"
+              [value]="firstName()"
+              (input)="firstName.set($any($event.target).value)"
+            >
+  
+            <input
+              type="text"
+              placeholder="Last name"
+              [value]="lastName()"
+              (input)="lastName.set($any($event.target).value)"
+            >
+  
+          </div>
+  
+  
+          <input
+            type="email"
+            placeholder="Email address"
+            [value]="email()"
+            (input)="email.set($any($event.target).value)"
+          >
+  
+  
+          <input
+            type="password"
+            placeholder="Password (min. 6 characters)"
+            [value]="password()"
+            (input)="password.set($any($event.target).value)"
+          >
+  
+  
+          <button type="submit">
+            Create Account
+          </button>
+  
+        </form>
+  
+  
+        <p class="signin-text">
+            Already have an account?
+            <span (click)="openLogin()">Sign in</span>
+          </p>
+  
+      </div>
+  
+    </div>
+  
+  </div>

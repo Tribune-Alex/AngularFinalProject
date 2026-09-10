@@ -12,6 +12,8 @@ export class TrainCardComponents {
   stations = input<Station[]>([]);
   toStations = input<Station[]>([]);
   selectedTrain = input<TrainDetails | null>(null)
+  fromStationName = input<string>('');
+  toStationName = input<string>('');
   transSelected = output<number>()
   search = output<string>();
   fromStationSelected = output<number>();

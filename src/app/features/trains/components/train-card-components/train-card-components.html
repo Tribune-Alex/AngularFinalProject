@@ -25,16 +25,13 @@
 
                 <label>FROM</label>
 
-                <select (change)="
-                                selectFromStation(+$any($event.target).value);
-                                selectFromStationName(
-                                    $any($event.target).options[$any($event.target).selectedIndex].text
-                                )
-                        ">
-                    <option value="">Any origin</option>
+                <select (change)="selectFromStationName($any($event.target).value)">
+                    <option value="" [selected]="!fromStationName()">
+                        Any origin
+                    </option>
 
                     @for (station of stations(); track station.id) {
-                    <option [value]="station.id">
+                    <option [value]="station.name" [selected]="station.name === fromStationName()">
                         {{ station.name }}
                     </option>
                     }
@@ -42,23 +39,20 @@
 
                 <label>TO</label>
 
-                <select (change)="
-    selectToStation(+$any($event.target).value);
-    selectToStationName(
-      $any($event.target).options[$any($event.target).selectedIndex].text
-    )
-  ">
-                    <option value="">Any destination</option>
+                <select (change)="selectToStationName($any($event.target).value)">
+                    <option value="" [selected]="!toStationName()">
+                        Any destination
+                    </option>
 
                     @for (station of toStations(); track station.id) {
-                    <option [value]="station.id">
+                    <option [value]="station.name" [selected]="station.name === toStationName()">
                         {{ station.name }}
                     </option>
                     }
                 </select>
                 <button (click)="applyFilter()">
                     Apply Filter
-                  </button>
+                </button>
 
             </div>
         </aside>

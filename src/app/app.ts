@@ -2,9 +2,12 @@ import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Traincomponents } from "./features/trains/container/traincomponents/traincomponents";
 import { TrainCardComponents } from "./features/trains/components/train-card-components/train-card-components";
+import { AuthPage } from "./features/auth/container/auth-page/auth-page";
+import { Navbar } from './share/components/navbar/navbar';
+
 
 @Component({
-  imports: [Traincomponents],
+  imports: [Navbar,RouterOutlet],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',
