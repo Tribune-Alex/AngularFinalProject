@@ -1,0 +1,126 @@
+@if (profile.value()?.data; as user) {
+
+<div class="profile-page">
+
+    <aside class="profile-sidebar">
+
+        <div class="avatar">
+
+            @if (pictureUrl()) {
+            <img [src]="pictureUrl()" alt="Profile picture">
+            } @else {
+            {{ firstName().charAt(0) }}{{ lastName().charAt(0) }}
+            }
+
+        </div>
+
+        <h2>
+            {{ user.firstName }} {{ user.lastName }}
+        </h2>
+
+        <p class="email">
+            {{ user.email }}
+        </p>
+
+        <div class="sidebar-divider"></div>
+
+        <button class="sidebar-item active">
+            My Profile
+        </button>
+
+        <button class="sidebar-item">
+            My Bookings
+        </button>
+
+        <button class="sidebar-item" (click)="openSettings()">
+            Settings
+        </button>
+
+        <button class="sign-out" (click)="logout()">
+            Sign Out
+        </button>
+
+    </aside>
+
+
+    <section class="profile-content">
+
+        <h1>Personal Information</h1>
+
+        <p class="subtitle">
+            Update your name, contact details and date of birth.
+        </p>
+
+
+        <div class="form-group full">
+            <label>PICTURE URL</label>
+
+            <input type="text" [value]="pictureUrl()" (input)="updatePictureUrl($event)" placeholder="https://">
+        </div>
+
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label>FIRST NAME</label>
+
+                <input type="text" [value]="firstName()" (input)="updateFirstName($event)">
+            </div>
+
+            <div class="form-group">
+                <label>LAST NAME</label>
+
+                <input type="text" [value]="lastName()" (input)="updateLastName($event)">
+            </div>
+
+        </div>
+
+
+        <div class="form-group full">
+            <label>EMAIL ADDRESS</label>
+
+            <input type="email" [value]="email()" (input)="updateEmail($event)">
+        </div>
+
+
+        <div class="form-group full">
+            <label>PHONE NUMBER</label>
+
+            <input type="text" [value]="phoneNumber()" (input)="updatePhoneNumber($event)"
+                placeholder="e.g. +1 555 0100">
+        </div>
+
+
+        <div class="form-group full">
+            <label>ADDRESS</label>
+
+            <input type="text" [value]="address()" (input)="updateAddress($event)" placeholder="Your address">
+        </div>
+
+
+        <div class="form-group full">
+            <label>DATE OF BIRTH</label>
+
+            <input type="date" [value]="dateOfBirth()" (input)="updateDateOfBirth($event)">
+        </div>
+
+
+        <div class="actions">
+
+            @if (updateSuccess()) {
+            <p class="success-message">
+                Profile updated successfully
+            </p>
+            }
+
+            <button class="save-btn" (click)="saveProfile()">
+                Save Changes
+            </button>
+
+        </div>
+
+    </section>
+
+</div>
+
+}

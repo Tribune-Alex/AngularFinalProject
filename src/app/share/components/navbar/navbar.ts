@@ -1,5 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject} from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Authservice } from '../../../features/auth/services/authservice';
+
 
 @Component({
   imports: [RouterLink,RouterLinkActive],
@@ -9,9 +11,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class Navbar {
   private router = inject(Router);
-  public isLoggedIn = signal(
-    !!localStorage.getItem('accessToken')
-  );
+  public authService = inject(Authservice);
   public isHome(): boolean {
     return this.router.url === '/';
   }
@@ -20,12 +20,6 @@ export class Navbar {
     return this.router.url.startsWith('/trains');
   }
 
-  logout(): void {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-  
-    this.isLoggedIn.set(false);
-  }
 
   goHome(): void {
     this.router.navigate(['/']);
@@ -41,5 +35,9 @@ export class Navbar {
 
   goRegister(): void {
     this.router.navigate(['/auth/register']);
+  }
+
+  goProfile(): void {
+    this.router.navigate(['/profile']);
   }
 }

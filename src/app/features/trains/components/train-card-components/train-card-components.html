@@ -56,8 +56,48 @@
 
             </div>
         </aside>
+        
 
         <main class="content">
+            <div class="schedule-search">
+                <input
+                  #scheduleInput
+                  type="text"
+                  placeholder="Search schedules..."
+                  (input)="scheduleSearch.emit(scheduleInput.value)"
+                >
+              </div>
+
+              @if (scheduleResults().length > 0) {
+
+                <div class="schedule-results">
+              
+                  @for (item of scheduleResults(); track item.id) {
+              
+                    <div class="schedule-result-card">
+              
+                      <div class="route">
+                        <strong>{{ item.origin }}</strong>
+                        <span>→</span>
+                        <strong>{{ item.destination }}</strong>
+                      </div>
+              
+                      <div class="time">
+                        {{ item.departureTime }}
+                      </div>
+              
+                      <div class="train-name">
+                        {{ item.trainName }} #{{ item.trainNumber }}
+                      </div>
+              
+                    </div>
+              
+                  }
+              
+                </div>
+              
+              }
+              
 
             <div class="trains">
                 @for (train of trains(); track $index) {

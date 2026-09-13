@@ -1,0 +1,125 @@
+<div class="settings-page">
+
+    <aside class="profile-sidebar">
+
+        <div class="avatar">
+            ST
+        </div>
+
+        <h2>My Account</h2>
+
+        <div class="sidebar-divider"></div>
+
+        <button class="sidebar-item" (click)="openProfile()">
+            My Profile
+        </button>
+
+        <button class="sidebar-item">
+            My Bookings
+        </button>
+
+        <button class="sidebar-item active">
+            Settings
+        </button>
+
+        <button class="sign-out" (click)="logout()">
+            Sign Out
+        </button>
+
+    </aside>
+
+
+    <section class="settings-content">
+
+        <h1>Security Settings</h1>
+
+        <p class="subtitle">
+            Manage your password and account security.
+        </p>
+
+
+        <div class="settings-card">
+
+            <h2>Change Password</h2>
+
+            <div class="form-group">
+                <label>CURRENT PASSWORD</label>
+
+                <input type="password" [value]="currentPassword()" (input)="updateCurrentPassword($event)"
+                    placeholder="Enter current password">
+            </div>
+
+            <div class="form-group">
+                <label>NEW PASSWORD</label>
+
+                <input type="password" [value]="newPassword()" (input)="updateNewPassword($event)"
+                    placeholder="Enter new password">
+            </div>
+
+            <div class="form-group">
+                <label>CONFIRM NEW PASSWORD</label>
+
+                <input type="password" [value]="confirmPassword()" (input)="updateConfirmPassword($event)"
+                    placeholder="Confirm new password">
+                @if (passwordError()) {
+                <p class="password-error">
+                    {{ passwordError() }}
+                </p>
+                }
+                @if (passwordSuccess()) {
+                <p class="password-success">
+                    {{ passwordSuccess() }}
+                </p>
+                }
+            </div>
+
+            <div class="actions">
+                <button class="save-btn" (click)="changePassword()">
+                    Change Password
+                </button>
+            </div>
+
+        </div>
+
+
+        <div class="danger-card">
+
+            <h2>Danger Zone</h2>
+
+            <p>
+                Deleting your account is permanent and cannot be undone.
+            </p>
+
+            <button class="delete-btn" (click)="showDeleteConfirm.set(true)">
+                Delete Account
+            </button>
+            @if (showDeleteConfirm()) {
+
+            <div class="delete-confirm">
+
+                <p>
+                    Are you sure you want to delete your account?
+                    This action cannot be undone.
+                </p>
+
+                <div class="delete-actions">
+
+                    <button class="cancel-delete" (click)="showDeleteConfirm.set(false)">
+                        Cancel
+                    </button>
+
+                    <button class="confirm-delete" (click)="deleteAccount()">
+                        Yes, Delete My Account
+                    </button>
+
+                </div>
+
+            </div>
+
+            }
+
+        </div>
+
+    </section>
+
+</div>

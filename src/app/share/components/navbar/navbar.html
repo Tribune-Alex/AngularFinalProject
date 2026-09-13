@@ -35,7 +35,7 @@
     <!-- RIGHT: AUTH -->
     <div class="navbar-auth">
 
-        @if (!isLoggedIn()) {
+        @if (!authService.isLoggedIn()) {
 
         <button class="sign-in" (click)="goLogin()">
             Sign In
@@ -47,15 +47,11 @@
 
         }
 
-        @if (isLoggedIn()) {
+        @if (authService.isLoggedIn()) {
 
-        <button class="sign-in">
-            Profile
-        </button>
-
-        <button class="get-started" (click)="logout()">
-            Logout
-        </button>
+            <button class="sign-in" (click)="goProfile()">
+                My Profile
+            </button>
 
         }
 

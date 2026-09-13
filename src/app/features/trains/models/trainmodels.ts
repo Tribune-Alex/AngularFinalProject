@@ -55,3 +55,57 @@ export interface Train {
   export interface StationsResponse {
     data: Station[];
   }
+
+
+  export interface SchedulesResponse {
+    data: {
+      items: Schedule[];
+      currentPage: number;
+      totalPages: number;
+      totalCount: number;
+      pageSize: number;
+      hasMore: boolean;
+    };
+  }
+
+  export interface Coach {
+    id: number;
+    number: number;
+    class: string;
+    price: number;
+    trainId: number;
+    seatCount: number;
+  }
+  
+  export interface CoachesResponse {
+    data: {
+      items: Coach[];
+      currentPage: number;
+      totalPages: number;
+      totalCount: number;
+      pageSize: number;
+      hasMore: boolean;
+    };
+  }
+
+  export interface Seat {
+    id: number;
+    number: string;
+    coachId: number;
+  }
+  
+  export interface SeatsResponse {
+    data: Seat[];
+  }
+
+
+  export interface AvailableSeat {
+    id: number;
+    number: string;
+    coachId: number;
+    isAvailable: boolean;
+  }
+  
+  export interface SeatAvailabilityResponse {
+    data: AvailableSeat[];
+  }

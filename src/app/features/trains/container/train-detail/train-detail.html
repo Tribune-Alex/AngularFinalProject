@@ -1,0 +1,13 @@
+<app-train-detail-card
+  [train]="selectedTrain.value()?.data ?? null"
+  [schedules]="trainSchedules()"
+  [coaches]="
+    selectedCoachClass() === 'All'
+      ? (coaches.value()?.data.items ?? [])
+      : (filteredCoaches.value()?.data.items ?? [])
+  "
+  [isLoggedIn]="authService.isLoggedIn()"
+  (coachClassSelected)="selectCoachClass($event)"
+  (coachSelected)="selectCoach($event)"
+  (scheduleSelected)="selectScheduleForBooking($event)">
+</app-train-detail-card>

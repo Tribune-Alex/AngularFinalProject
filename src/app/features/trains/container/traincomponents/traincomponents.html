@@ -12,7 +12,7 @@
   [fromStationName]="fromStationName()"
   [toStationName]="toStationName()"
 
-  [selectedTrain]="selectedTrain.value()?.data ?? null"
+  /* [selectedTrain]="selectedTrain.value()?.data ?? null" */
 
   (transSelected)="selectTrain($event)"
   (search)="searchInput($event)"
@@ -21,4 +21,6 @@
   (toStationSelected)="selectToStation($event)"
   (toStationNameSelected)="selectToStationName($event)"
   (applyFilterSelected)="applyFilter()"
+  [scheduleResults]="searchedSchedules.value()?.data.items ?? []"
+  (scheduleSearch)="searchSchedule($event)"
 ></app-train-card-components>

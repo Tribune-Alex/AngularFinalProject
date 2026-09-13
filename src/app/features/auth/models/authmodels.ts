@@ -31,3 +31,37 @@ export interface RegisterRequest {
     token: string;
     password: string;
   }
+
+  export interface UserDetails {
+    phoneNumber: string | null;
+    address: string | null;
+    dob: string | null;
+    pictureUrl: string | null;
+  }
+  
+  export interface UserProfile {
+    id: number;
+    email: string;
+    lastName: string;
+    firstName: string;
+    details: UserDetails;
+  }
+  
+  export interface UserProfileResponse {
+    data: UserProfile;
+  }
+
+  export interface UpdateUserRequest {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    address: string;
+    pictureUrl: string;
+    dateOfBirth: string;
+  }
+
+  export interface ChangePasswordRequest {
+    currentPassword: string;
+    newPassword: string;
+  }

@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core';
-import { Station, Train, TrainDetails } from '../../models/trainmodels';
+import { Schedule, Station, Train, TrainDetails } from '../../models/trainmodels';
 
 @Component({
   imports: [],
@@ -21,6 +21,8 @@ export class TrainCardComponents {
   toStationSelected = output<number>();
   toStationNameSelected = output<string>();
   applyFilterSelected = output<void>();
+  scheduleSearch = output<string>();
+  scheduleResults = input<Schedule[]>([]);
   selectTrain(id: number): void {
     this.transSelected.emit(id)
   }
@@ -35,6 +37,14 @@ export class TrainCardComponents {
   }
   selectFromStationName(name: string): void {
     this.fromStationNameSelected.emit(name);
+  
+    const station = this.stations().find(
+      item => item.name === name
+    );
+  
+    if (station) {
+      this.fromStationSelected.emit(station.id);
+    }
   }
   selectToStationName(name: string): void {
     this.toStationNameSelected.emit(name);

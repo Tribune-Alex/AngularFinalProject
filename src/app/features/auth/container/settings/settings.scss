@@ -1,0 +1,319 @@
+.settings-page {
+    min-height: calc(100vh - 72px);
+    padding: 30px;
+    background: #0b1120;
+  
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 32px;
+  
+    color: #f5f0df;
+  }
+  
+  .settings-content {
+    width: 100%;
+  }
+  
+  .settings-content > h1 {
+    margin: 0;
+    font-size: 26px;
+    color: #f8f2df;
+  }
+  
+  .subtitle {
+    margin-top: 8px;
+    margin-bottom: 32px;
+    color: #9f947e;
+    font-size: 14px;
+  }
+  
+  .settings-card,
+  .danger-card {
+    padding: 32px;
+    background: #121a2b;
+    border: 1px solid #24304a;
+    border-radius: 18px;
+  }
+  
+  .settings-card {
+    margin-bottom: 26px;
+  }
+  
+  .settings-card h2,
+  .danger-card h2 {
+    margin: 0 0 26px;
+    font-size: 19px;
+    color: #f8f2df;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    color: #c7a952;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+  
+  .form-group input {
+    height: 44px;
+    padding: 0 14px;
+  
+    border: 1px solid #2c3a58;
+    border-radius: 8px;
+  
+    background: #0f1726;
+    color: #f5f0df;
+  
+    outline: none;
+    font-size: 14px;
+  
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  
+  .form-group input:focus {
+    border-color: #d2ad45;
+    box-shadow: 0 0 0 2px rgba(210, 173, 69, 0.12);
+  }
+  
+  .form-group input::placeholder {
+    color: #5f6470;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 26px;
+  }
+  
+  .save-btn {
+    padding: 13px 24px;
+  
+    border: none;
+    border-radius: 8px;
+  
+    background: #d6b44a;
+    color: #111827;
+  
+    font-weight: 700;
+    cursor: pointer;
+  
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  
+  .save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(214, 180, 74, 0.2);
+  }
+  
+  /* Danger Zone */
+  
+  .danger-card {
+    border-color: rgba(255, 90, 90, 0.35);
+  }
+  
+  .danger-card h2 {
+    color: #ff6464;
+    margin-bottom: 10px;
+  }
+  
+  .danger-card p {
+    margin: 0 0 24px;
+    color: #9f947e;
+    font-size: 14px;
+  }
+  
+  .delete-btn {
+    padding: 12px 22px;
+  
+    border: 1px solid #ff6464;
+    border-radius: 8px;
+  
+    background: rgba(255, 100, 100, 0.08);
+    color: #ff6464;
+  
+    font-weight: 700;
+    cursor: pointer;
+  
+    transition:
+      background 0.2s ease,
+      transform 0.2s ease;
+  }
+  
+  .delete-btn:hover {
+    background: rgba(255, 100, 100, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .profile-sidebar {
+    padding: 32px 28px;
+  
+    background: #121a2b;
+    border: 1px solid #24304a;
+    border-radius: 18px;
+  
+    height: fit-content;
+  }
+  
+  .avatar {
+    width: 74px;
+    height: 74px;
+    margin: 0 auto;
+  
+    border-radius: 50%;
+    background: #d1aa3f;
+    color: #111827;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    font-size: 22px;
+    font-weight: 700;
+  }
+  
+  .profile-sidebar h2 {
+    margin-top: 18px;
+    margin-bottom: 8px;
+  
+    text-align: center;
+    font-size: 20px;
+  }
+  
+  .sidebar-divider {
+    height: 1px;
+    background: #24304a;
+    margin: 28px 0;
+  }
+  
+  .sidebar-item,
+  .sign-out {
+    width: 100%;
+    border: none;
+    background: transparent;
+  
+    padding: 12px 14px;
+    border-radius: 9px;
+  
+    text-align: left;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  
+  .sidebar-item {
+    color: #9d9277;
+    margin-bottom: 6px;
+  }
+  
+  .sidebar-item:hover {
+    background: #1b2232;
+    color: #d7b54a;
+  }
+  
+  .sidebar-item.active {
+    background: #1d2331;
+    color: #d7b54a;
+  }
+  
+  .sign-out {
+    margin-top: 34px;
+    color: #ff6464;
+  }
+  
+  .sign-out:hover {
+    background: rgba(255, 100, 100, 0.08);
+  }
+
+  .password-error {
+    margin: -8px 0 18px;
+    color: #ff6464;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .password-success {
+    margin: -8px 0 18px;
+    color: #45c995;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .delete-confirm {
+    margin-top: 22px;
+    padding: 20px;
+  
+    background: rgba(255, 100, 100, 0.06);
+    border: 1px solid rgba(255, 100, 100, 0.25);
+    border-radius: 12px;
+  }
+  
+  .delete-confirm p {
+    margin: 0 0 18px;
+  
+    color: #d6cfc0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .delete-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+  
+  .cancel-delete,
+  .confirm-delete {
+    padding: 11px 18px;
+  
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+  
+    transition:
+      transform 0.2s ease,
+      background 0.2s ease,
+      border-color 0.2s ease;
+  }
+  
+  .cancel-delete {
+    border: 1px solid #3a465f;
+    background: #151e30;
+    color: #d8d2c4;
+  }
+  
+  .cancel-delete:hover {
+    background: #1d283d;
+    transform: translateY(-1px);
+  }
+  
+  .confirm-delete {
+    border: 1px solid #ff6464;
+    background: #ff6464;
+    color: #fff;
+  }
+  
+  .confirm-delete:hover {
+    background: #e95454;
+    border-color: #e95454;
+    transform: translateY(-1px);
+  }
+  
+  @media (max-width: 900px) {
+    .settings-page {
+        grid-template-columns: 1fr;
+    }
+  
+    .settings-card,
+    .danger-card {
+      padding: 22px;
+    }
+  }

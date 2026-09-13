@@ -1,0 +1,394 @@
+:host {
+    display: block;
+    min-height: 100vh;
+    padding: 40px 20px 70px;
+  
+    background:
+      radial-gradient(
+        circle at 50% -10%,
+        rgba(227, 181, 65, 0.08),
+        transparent 32%
+      ),
+      linear-gradient(
+        180deg,
+        #0b1220 0%,
+        #0d1526 45%,
+        #090f1b 100%
+      );
+  }
+
+
+.seats-test {
+    display: grid;
+    grid-template-columns: repeat(4, 70px);
+    gap: 14px;
+    justify-content: center;
+    margin-top: 30px;
+  
+    button {
+      height: 48px;
+      border: 1px solid #2c3958;
+      border-radius: 10px;
+      background: #141c2f;
+      color: #f4edda;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s ease;
+  
+      &:hover:not(:disabled) {
+        border-color: #e3b541;
+        color: #e3b541;
+        transform: translateY(-1px);
+      }
+  
+      &.selected {
+        background: #e3b541;
+        color: #0f1728;
+        border-color: #e3b541;
+      }
+  
+      &:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .seat-legend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 28px 0 20px;
+  
+    div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #b9b29f;
+      font-size: 13px;
+    }
+  }
+  
+  .legend-box {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    display: inline-block;
+  
+    &.available {
+      background: #141c2f;
+      border: 1px solid #3a496c;
+    }
+  
+    &.selected {
+      background: #e3b541;
+      border: 1px solid #e3b541;
+    }
+  
+    &.unavailable {
+      background: rgba(255, 2, 2, 0.795);
+      border: 1px solid #343b4b;
+      opacity: 0.45;
+    }
+  }
+  
+  .seat-map {
+    display: grid;
+    grid-template-columns: repeat(2, 72px);
+    gap: 14px 18px;
+    justify-content: center;
+    padding: 28px;
+    margin: 0 auto;
+    max-width: 260px;
+    background: #10182a;
+    border: 1px solid #26324d;
+    border-radius: 22px;
+  }
+  
+  .seat {
+    height: 52px;
+    border: 1px solid #33415f;
+    border-radius: 12px;
+    background: #141c2f;
+    color: #f4edda;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+  
+    &:hover:not(:disabled) {
+      color: #e3b541;
+      border-color: #e3b541;
+      transform: translateY(-2px);
+    }
+  
+    &.selected {
+      background: #e3b541;
+      color: #0f1728;
+      border-color: #e3b541;
+    }
+  
+    &.unavailable,
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      background: rgba(255, 2, 2, 0.795);
+      color: #777;
+    }
+  }
+
+  .date-section {
+    margin: 32px auto;
+    max-width: 760px;
+    padding: 28px 32px;
+    background: #10182a;
+    border: 1px solid #26324d;
+    border-radius: 22px;
+  }
+  
+  .date-header {
+    margin-bottom: 22px;
+  
+    .section-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #e3b541;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+    }
+  
+    h2 {
+      margin: 0;
+      color: #f4edda;
+      font-size: 24px;
+      font-weight: 600;
+    }
+  }
+  
+  .date-picker-box {
+    display: flex;
+    align-items: center;
+  
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #33415f;
+      border-radius: 12px;
+      background: #141c2f;
+      color: #f4edda;
+      font-size: 15px;
+      outline: none;
+      transition: 0.2s ease;
+  
+      &:focus {
+        border-color: #e3b541;
+      }
+  
+      &::-webkit-calendar-picker-indicator {
+        cursor: pointer;
+        filter: invert(1);
+      }
+    }
+  }
+  
+  .selected-date-info {
+    margin-top: 16px;
+    color: #9c9077;
+    font-size: 14px;
+  
+    strong {
+      margin-left: 6px;
+      color: #e3b541;
+    }
+  }
+
+  .schedule-section {
+    margin: 32px auto;
+    max-width: 760px;
+    padding: 28px 32px;
+    background: #10182a;
+    border: 1px solid #26324d;
+    border-radius: 22px;
+  }
+  
+  .schedule-header {
+    margin-bottom: 22px;
+  
+    .section-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #e3b541;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+    }
+  
+    h2 {
+      margin: 0;
+      color: #f4edda;
+      font-size: 24px;
+      font-weight: 600;
+    }
+  }
+  
+  .schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .schedule-option {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  
+    padding: 18px 20px;
+  
+    background: #141c2f;
+    border: 1px solid #2b3854;
+    border-radius: 14px;
+  
+    color: #f4edda;
+    cursor: pointer;
+    transition: 0.2s ease;
+  
+    &:hover {
+      border-color: #e3b541;
+    }
+  
+    &.selected {
+      border-color: #e3b541;
+      background: rgba(227, 181, 65, 0.08);
+    }
+  }
+  
+  .route {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  
+    strong {
+      font-size: 15px;
+    }
+  
+    span {
+      color: #e3b541;
+    }
+  }
+  
+  .departure-time {
+    color: #e3b541;
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  .seats-section {
+    margin: 32px auto;
+    max-width: 760px;
+    padding: 28px 32px;
+    background: #10182a;
+    border: 1px solid #26324d;
+    border-radius: 22px;
+  }
+  
+  .seats-header {
+    margin-bottom: 20px;
+  
+    .section-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #e3b541;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+    }
+  
+    h2 {
+      margin: 0;
+      color: #f4edda;
+      font-size: 24px;
+      font-weight: 600;
+    }
+  }
+
+  .coach-section {
+    margin: 32px auto;
+    max-width: 760px;
+    padding: 28px 32px;
+    background: #10182a;
+    border: 1px solid #26324d;
+    border-radius: 22px;
+  }
+  
+  .coach-header {
+    margin-bottom: 22px;
+  
+    .section-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #e3b541;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+    }
+  
+    h2 {
+      margin: 0;
+      color: #f4edda;
+      font-size: 24px;
+      font-weight: 600;
+    }
+  }
+  
+  .coach-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .coach-option {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    align-items: center;
+    gap: 20px;
+  
+    padding: 18px 20px;
+  
+    background: #141c2f;
+    border: 1px solid #2b3854;
+    border-radius: 14px;
+  
+    color: #f4edda;
+    cursor: pointer;
+    transition: 0.2s ease;
+  
+    &:hover {
+      border-color: #e3b541;
+    }
+  
+    &.selected {
+      border-color: #e3b541;
+      background: rgba(227, 181, 65, 0.08);
+    }
+  }
+  
+  .coach-number {
+    font-weight: 700;
+  }
+  
+  .coach-class {
+    color: #b9b29f;
+  }
+  
+  .coach-price {
+    color: #e3b541;
+    font-weight: 700;
+    font-size: 17px;
+  }
+
+  

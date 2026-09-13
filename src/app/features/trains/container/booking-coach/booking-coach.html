@@ -1,0 +1,53 @@
+<div class="coach-page">
+
+    <div class="coach-page-header">
+        <span class="section-label">SELECT COACH</span>
+        <h1>Choose your coach</h1>
+        <p>
+            Select a coach for your journey.
+        </p>
+    </div>
+
+    @if (coaches.value()?.data.items; as coachList) {
+
+    <div class="train-visual">
+
+        <div class="locomotive">
+            <img src="/images/lokomotiv.png" alt="Locomotive">
+        </div>
+
+        <div class="visual-coaches">
+
+            @for (coach of coachList; track coach.id) {
+
+            <button class="visual-coach" (click)="selectCoach(coach.id)">
+                <img class="coach-image" src="images/vagon.png" alt="Coach">
+
+                <div class="coach-data">
+                    <span>Coach #{{ coach.number }}</span>
+
+                    <span class="class-badge" [class.business]="coach.class === 'Business'"
+                        [class.second]="coach.class === 'Second'"
+                        [class.third]="coach.class === 'Third' || coach.class === '3'">
+                        {{ coach.class }}
+                    </span>
+
+                    <span>
+                        {{ coach.seatCount }} seats
+                    </span>
+
+                    <strong>
+                        ${{ coach.price }}
+                    </strong>
+                </div>
+            </button>
+
+            }
+
+        </div>
+
+    </div>
+
+    }
+
+</div>

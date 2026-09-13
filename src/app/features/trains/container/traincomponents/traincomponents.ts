@@ -2,7 +2,7 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { Trainservice } from '../../services/trainservice';
 import { TrainCardComponents } from '../../components/train-card-components/train-card-components';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   imports: [TrainCardComponents],
@@ -13,27 +13,29 @@ import { ActivatedRoute } from '@angular/router';
 export class Traincomponents {
   public trainService=inject(Trainservice);
   private route = inject(ActivatedRoute);
+  private router=inject(Router)
   public stations = this.trainService.stations;
   public toStations = this.trainService.toStations;
-  public selectedTrainId = signal<number>(1);
-  query = signal<string | undefined>(undefined);
+  // public selectedTrainId = signal<number>(1);
+  public query = signal<string | undefined>(undefined);
   public fromStationId = signal<number | null>(null);
   public fromStationName = signal<string>('');
   public toStationId = signal<number | null>(null);
   public toStationName = signal<string>('');
   public filterRequested = signal<number>(0);
   public filterActive = signal<boolean>(false);
+  public scheduleQuery = signal<string>('');
   public trains = rxResource({
     stream: () => this.trainService.getTrains(),
   });
 
-  selectedTrain = rxResource({
-    params: () => this.selectedTrainId(),
-    stream: ({ params }) => this.trainService.getTrainById(params),
-  });
+  // selectedTrain = rxResource({
+  //   params: () => this.selectedTrainId(),
+  //   stream: ({ params }) => this.trainService.getTrainById(params),
+  // });
 
   selectTrain(id: number): void {
-    this.selectedTrainId.set(id);
+    this.router.navigate(['/train', id]);
   }
 
   constructor() {
@@ -127,4 +129,22 @@ export class Traincomponents {
       );
     }
   });
+
+  public searchedSchedules = rxResource({
+    params: () => {
+      const query = this.scheduleQuery().trim();
+  
+      return query ? query : undefined;
+    },
+  
+    stream: ({ params }) => {
+      return this.trainService.searchSchedules(params);
+    }
+  });
+
+  searchSchedule(value: string): void {
+    this.scheduleQuery.set(value);
+  }
+
+ 
 }

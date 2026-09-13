@@ -1,0 +1,168 @@
+@if (train(); as currentTrain) {
+
+<div class="train-details">
+
+    <div class="train-image">
+        <img [src]="currentTrain.thumbnail" [alt]="currentTrain.name">
+    </div>
+
+    <div class="train-info">
+
+        <p class="train-number">
+            TRAIN #{{ currentTrain.number }}
+        </p>
+
+        <h1>{{ currentTrain.name }}</h1>
+
+        <div class="train-stats">
+
+            <div>
+                <span>COACHES</span>
+                <strong>{{ currentTrain.coachesCount }}</strong>
+            </div>
+
+            <div>
+                <span>TOTAL SEATS</span>
+                <strong>{{ currentTrain.totalSeats }}</strong>
+            </div>
+
+            <div>
+                <span>SCHEDULES</span>
+                <strong>{{ currentTrain.schedules.length }}</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="tabs">
+
+    <button [class.active]="activeTab() === 'schedules'" (click)="activeTab.set('schedules')">
+        Schedules ({{ schedules().length }})
+    </button>
+
+    <button [class.active]="activeTab() === 'coaches'" (click)="activeTab.set('coaches')">
+        Coaches ({{ coaches().length }})
+    </button>
+
+</div>
+
+}
+
+@if (activeTab() === 'schedules') {
+
+<div class="schedule-list">
+
+    @for (item of schedules(); track item.id) {
+
+    <div class="schedule-card" [class.selected]="selectedScheduleId() === item.id"
+        (click)="selectedScheduleId.set(item.id)">
+
+        <div class="station">
+            <span>DEPARTURE</span>
+            <strong>{{ item.origin }}</strong>
+        </div>
+
+        <div class="route-arrow">
+            →
+        </div>
+
+        <div class="station">
+            <span>ARRIVAL</span>
+            <strong>{{ item.destination }}</strong>
+        </div>
+
+        <div class="departure-time">
+            <span>DEPARTURE TIME</span>
+            <strong>{{ item.departureTime }}</strong>
+        </div>
+
+        <button class="book-btn" (click)="scheduleSelected.emit(item.id)">
+            @if (isLoggedIn()) {
+            Book now
+            } @else {
+            Sign in to book
+            }
+        </button>
+
+    </div>
+
+    }
+
+</div>
+
+}
+
+
+
+@if (activeTab() === 'coaches') {
+
+<div class="coach-filters">
+
+    <button [class.active]="selectedCoachClass() === 'All'"
+        (click)="selectedCoachClass.set('All'); coachClassSelected.emit('All')">
+        All
+    </button>
+
+    <button [class.active]="selectedCoachClass() === 'Business'"
+        (click)="selectedCoachClass.set('Business'); coachClassSelected.emit('2')">
+        Business
+    </button>
+
+    <button [class.active]="selectedCoachClass() === 'Second'"
+        (click)="selectedCoachClass.set('Second'); coachClassSelected.emit('1')">
+        Second
+    </button>
+
+    <button [class.active]="selectedCoachClass() === 'Other'"
+        (click)="selectedCoachClass.set('Other'); coachClassSelected.emit('0')">
+        Other
+    </button>
+
+</div>
+
+<div class="coach-list">
+
+    @for (coach of coaches(); track coach.id) {
+
+    <div class="coach-card" (click)="coachSelected.emit(coach.id)">
+
+        <div>
+            <span>COACH</span>
+            <strong>#{{ coach.number }}</strong>
+        </div>
+
+        <div>
+            <span>CLASS</span>
+
+            <strong class="coach-class" [class.business]="coach.class === 'Business'"
+                [class.second]="coach.class === 'Second'"
+                [class.other]="coach.class !== 'Business' && coach.class !== 'Second'">
+                {{ coach.class }}
+            </strong>
+        </div>
+
+        <div>
+            <span>SEATS</span>
+            <strong>{{ coach.seatCount }}</strong>
+        </div>
+
+        <div>
+            <span>PRICE</span>
+            <strong>${{ coach.price }}</strong>
+        </div>
+
+    </div>
+
+    }
+    @if (coaches().length === 0) {
+    <div class="no-coaches">
+        No coaches found
+    </div>
+    }
+
+</div>
+
+}
