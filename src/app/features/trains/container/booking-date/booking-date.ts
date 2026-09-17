@@ -1,7 +1,8 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Trainservice } from '../../services/trainservice';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { CreateBooking } from '../../models/bookingmodels';
 
 @Component({
   imports: [],
@@ -22,6 +23,11 @@ export class BookingDate {
   public coachId = signal<number>(
     Number(this.route.snapshot.paramMap.get('coachId'))
   );
+
+  public bookingSuccess = signal<boolean>(false);
+  public bookingLoading = signal<boolean>(false);
+  public bookingError = signal<string>('');
+  private router = inject(Router);
 
   constructor() {
     console.log('TRAIN ID:', this.trainId);
@@ -108,4 +114,52 @@ export class BookingDate {
     console.log('COACH ID:', this.coachId());
   }
 
+
+  createBooking(): void {
+    const scheduleId = this.selectedScheduleId();
+  
+    if (
+      scheduleId === null ||
+      !this.selectedDate() ||
+      this.selectedSeatIds().length === 0
+    ) {
+      return;
+    }
+    this.bookingError.set('');
+  
+    const booking: CreateBooking = {
+      scheduleId: scheduleId,
+      seatId: this.selectedSeatIds(),
+      travelDate: new Date(this.selectedDate()).toISOString()
+    };
+  
+    console.log('BOOKING:', booking);
+    this.bookingLoading.set(true);
+    this.trainService.createBooking(booking).subscribe({
+      next: (response) => {
+        console.log('BOOKING SUCCESS:', response);
+        this.bookingLoading.set(false);
+        this.bookingSuccess.set(true);
+      },
+    
+      error: (error) => {
+        console.log('BOOKING ERROR:', error);
+      
+        this.bookingLoading.set(false);
+        this.bookingError.set('Booking failed. Please try again.');
+      }
+    });
+  }
+
+  goToBookings(): void {
+    this.router.navigate(['/profile'], {
+      queryParams: {
+        section: 'bookings'
+      }
+    });
+  }
+  
+  closeBookingSuccess(): void {
+    this.bookingSuccess.set(false);
+  }
 }

@@ -1,13 +1,64 @@
-<app-train-detail-card
+@if (selectedTrain.isLoading()) {
+
+  <div class="detail-skeleton">
+
+    <div class="detail-skeleton-image skeleton-animation"></div>
+
+    <div class="detail-skeleton-info">
+
+      <div class="skeleton-number skeleton-animation"></div>
+
+      <div class="skeleton-title skeleton-animation"></div>
+
+      <div class="skeleton-stats">
+
+        <div class="skeleton-stat">
+          <div class="skeleton-stat-label skeleton-animation"></div>
+          <div class="skeleton-stat-value skeleton-animation"></div>
+        </div>
+
+        <div class="skeleton-stat">
+          <div class="skeleton-stat-label skeleton-animation"></div>
+          <div class="skeleton-stat-value skeleton-animation"></div>
+        </div>
+
+        <div class="skeleton-stat">
+          <div class="skeleton-stat-label skeleton-animation"></div>
+          <div class="skeleton-stat-value skeleton-animation"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+} @else {
+
+  <app-train-detail-card
   [train]="selectedTrain.value()?.data ?? null"
+
   [schedules]="trainSchedules()"
+
   [coaches]="
     selectedCoachClass() === 'All'
       ? (coaches.value()?.data.items ?? [])
       : (filteredCoaches.value()?.data.items ?? [])
   "
+
+  [schedulesLoading]="schedules.isLoading()"
+
+  [coachesLoading]="
+    selectedCoachClass() === 'All'
+      ? coaches.isLoading()
+      : filteredCoaches.isLoading()
+  "
+
   [isLoggedIn]="authService.isLoggedIn()"
+
   (coachClassSelected)="selectCoachClass($event)"
   (coachSelected)="selectCoach($event)"
   (scheduleSelected)="selectScheduleForBooking($event)">
 </app-train-detail-card>
+
+}

@@ -1,5 +1,5 @@
 import { Component, input, output, signal } from '@angular/core';
-import { TrainDetails,Schedule, Coach } from '../../models/trainmodels';
+import { TrainDetails, Schedule, Coach } from '../../models/trainmodels';
 
 @Component({
   imports: [],
@@ -8,14 +8,16 @@ import { TrainDetails,Schedule, Coach } from '../../models/trainmodels';
   templateUrl: './train-detail-card.html',
 })
 export class TrainDetailCard {
-  train = input<TrainDetails | null>(null);
-  schedules = input<Schedule[]>([]);
-  coaches = input<Coach[]>([]);
-  isLoggedIn = input<boolean>(false);
-  selectedCoachClass = signal<string>('All');
-  coachClassSelected = output<string>();
-  coachSelected = output<number>();
-  selectedScheduleId = signal<number | null>(null);
-  scheduleSelected = output<number>();
-  activeTab = signal<'schedules' | 'coaches'>('schedules');
+  public train = input<TrainDetails | null>(null);
+  public schedules = input<Schedule[]>([]);
+  public coaches = input<Coach[]>([]);
+  public isLoggedIn = input<boolean>(false);
+  public schedulesLoading = input<boolean>(false);
+  public coachesLoading = input<boolean>(false);
+  public selectedCoachClass = signal<string>('All');
+  public coachClassSelected = output<string>();
+  public coachSelected = output<number>();
+  public selectedScheduleId = signal<number | null>(null);
+  public scheduleSelected = output<number>();
+  public activeTab = signal<'schedules' | 'coaches'>('schedules');
 }

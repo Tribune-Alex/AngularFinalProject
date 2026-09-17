@@ -53,47 +53,90 @@
 
 @if (activeTab() === 'schedules') {
 
-<div class="schedule-list">
-
-    @for (item of schedules(); track item.id) {
-
-    <div class="schedule-card" [class.selected]="selectedScheduleId() === item.id"
-        (click)="selectedScheduleId.set(item.id)">
-
-        <div class="station">
-            <span>DEPARTURE</span>
-            <strong>{{ item.origin }}</strong>
-        </div>
-
-        <div class="route-arrow">
-            →
-        </div>
-
-        <div class="station">
-            <span>ARRIVAL</span>
-            <strong>{{ item.destination }}</strong>
-        </div>
-
-        <div class="departure-time">
-            <span>DEPARTURE TIME</span>
-            <strong>{{ item.departureTime }}</strong>
-        </div>
-
-        <button class="book-btn" (click)="scheduleSelected.emit(item.id)">
-            @if (isLoggedIn()) {
-            Book now
-            } @else {
-            Sign in to book
-            }
-        </button>
-
-    </div>
-
+    @if (schedulesLoading()) {
+  
+      <div class="schedule-list">
+  
+        @for (item of [1, 2, 3]; track item) {
+  
+          <div class="schedule-card schedule-skeleton">
+  
+            <div class="schedule-skeleton-column">
+              <div class="schedule-skeleton-label skeleton-animation"></div>
+              <div class="schedule-skeleton-text skeleton-animation"></div>
+            </div>
+  
+            <div class="schedule-skeleton-arrow skeleton-animation"></div>
+  
+            <div class="schedule-skeleton-column">
+              <div class="schedule-skeleton-label skeleton-animation"></div>
+              <div class="schedule-skeleton-text skeleton-animation"></div>
+            </div>
+  
+            <div class="schedule-skeleton-column">
+              <div class="schedule-skeleton-label skeleton-animation"></div>
+              <div class="schedule-skeleton-time skeleton-animation"></div>
+            </div>
+  
+            <div class="schedule-skeleton-button skeleton-animation"></div>
+  
+          </div>
+  
+        }
+  
+      </div>
+  
+    } @else {
+  
+      <div class="schedule-list">
+  
+        @for (item of schedules(); track item.id) {
+  
+          <div
+            class="schedule-card"
+            [class.selected]="selectedScheduleId() === item.id"
+            (click)="selectedScheduleId.set(item.id)"
+          >
+  
+            <div class="station">
+              <span>DEPARTURE</span>
+              <strong>{{ item.origin }}</strong>
+            </div>
+  
+            <div class="route-arrow">
+              →
+            </div>
+  
+            <div class="station">
+              <span>ARRIVAL</span>
+              <strong>{{ item.destination }}</strong>
+            </div>
+  
+            <div class="departure-time">
+              <span>DEPARTURE TIME</span>
+              <strong>{{ item.departureTime }}</strong>
+            </div>
+  
+            <button
+              class="book-btn"
+              (click)="scheduleSelected.emit(item.id)"
+            >
+              @if (isLoggedIn()) {
+                Book now
+              } @else {
+                Sign in to book
+              }
+            </button>
+  
+          </div>
+  
+        }
+  
+      </div>
+  
     }
-
-</div>
-
-}
+  
+  }
 
 
 

@@ -1,6 +1,7 @@
 import { inject, Service, signal } from '@angular/core';
 import { CoachesResponse, SchedulesResponse, SeatAvailabilityResponse, SeatsResponse, StationsResponse, Train, TrainDetailsResponse, TrainsResponse } from '../models/trainmodels';
 import { HttpClient, httpResource } from '@angular/common/http';
+import { BookingDetailsResponse, BookingsResponse, CreateBooking, UpdateBookingDateRequest } from '../models/bookingmodels';
 
 @Service()
 export class Trainservice {
@@ -137,6 +138,52 @@ export class Trainservice {
               travelDate: travelDate
             }
           }
+        );
+      }
+
+      createBooking(booking: CreateBooking) {
+        return this.http.post(
+          'https://trainsapi.stepacademy.ge/api/bookings',
+          booking
+        );
+      }
+
+      getBookings(take: number = 10, page: number = 1) {
+        return this.http.get<BookingsResponse>(
+          `https://trainsapi.stepacademy.ge/api/bookings?Take=${take}&Page=${page}`
+        );
+      }
+
+      deleteBooking(id: number) {
+        return this.http.delete(
+          `https://trainsapi.stepacademy.ge/api/bookings/${id}`
+        );
+      }
+
+      getFilteredBookings(
+        from: string,
+        to: string,
+        take: number = 10,
+        page: number = 1
+      ) {
+        return this.http.get<BookingsResponse>(
+          `https://trainsapi.stepacademy.ge/api/bookings/filter?from=${from}&to=${to}&Take=${take}&Page=${page}`
+        );
+      }
+
+      getBookingById(id: number) {
+        return this.http.get<BookingDetailsResponse>(
+          `https://trainsapi.stepacademy.ge/api/bookings/${id}`
+        );
+      }
+
+      changeBookingDate(
+        id: number,
+        data: UpdateBookingDateRequest
+      ) {
+        return this.http.put(
+          `https://trainsapi.stepacademy.ge/api/bookings/${id}`,
+          data
         );
       }
 }

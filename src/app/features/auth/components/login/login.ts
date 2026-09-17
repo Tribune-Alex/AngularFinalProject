@@ -1,4 +1,4 @@
-import { Component, output, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { LoginRequest } from '../../models/authmodels';
 
 @Component({
@@ -10,6 +10,10 @@ import { LoginRequest } from '../../models/authmodels';
 export class Login {
   public email = signal('');
   public password = signal('');
+  public loginError = input<string>('');
+  errorClosed = output<void>();
+  public loginSuccess = input<boolean>(false);
+  continueLogin = output<void>();
 
   loginSubmit = output<LoginRequest>();
   showRegister = output<void>();
@@ -30,5 +34,13 @@ export class Login {
 
   requestPasswordReset(): void {
     this.forgotPassword.emit(this.email());
+  }
+
+  closeError(): void {
+    this.errorClosed.emit();
+  }
+
+  continueAfterLogin(): void {
+    this.continueLogin.emit();
   }
 }

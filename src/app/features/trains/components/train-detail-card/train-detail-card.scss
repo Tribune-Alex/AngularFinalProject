@@ -1,341 +1,567 @@
 :host {
-    display: block;
-    min-height: 100vh;
-    background-color: #0b1124;
-    color: #f5edcf;
+  display: block;
+  min-height: 100vh;
+
+  padding-top: 50px;
+  box-sizing: border-box;
+
+  background-color: #0b1124;
+  color: #f5edcf;
+}
+
+
+/* =========================
+   TRAIN DETAILS
+========================= */
+
+.train-details {
+  display: flex;
+  align-items: center;
+
+  gap: 48px;
+
+  max-width: 1450px;
+
+  margin: 0 auto;
+}
+
+
+/* =========================
+   TRAIN IMAGE
+========================= */
+
+.train-image {
+  width: 405px;
+  height: 285px;
+
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    border-radius: 18px;
   }
-  
-  .train-details {
+}
+
+
+/* =========================
+   TRAIN INFO
+========================= */
+
+.train-info {
+
+  h1 {
+    margin: 25px 0;
+
+    font-size: 48px;
+    font-weight: 700;
+  }
+}
+
+.train-number {
+  margin: 0;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  letter-spacing: 2px;
+
+  color: #d8ad36;
+}
+
+
+/* =========================
+   TRAIN STATS
+========================= */
+
+.train-stats {
+  display: flex;
+
+  gap: 55px;
+
+  div {
     display: flex;
-    align-items: center;
-    gap: 48px;
-    max-width: 1450px;
-    margin: 50px auto 0;
+    flex-direction: column;
+
+    gap: 10px;
   }
-  
-  .train-image {
-    width: 405px;
-    height: 285px;
-    flex-shrink: 0;
-  
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 18px;
+
+  span {
+    font-size: 14px;
+
+    letter-spacing: 1px;
+
+    opacity: 0.6;
+  }
+
+  strong {
+    font-size: 24px;
+  }
+}
+
+
+/* =========================
+   DETAIL TABS
+========================= */
+
+.detail-tabs {
+  max-width: 1450px;
+
+  margin: 65px auto 0;
+
+  display: flex;
+
+  gap: 20px;
+
+  border-bottom: 1px solid #273047;
+}
+
+.tab {
+  min-width: 170px;
+
+  padding: 18px 20px 22px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #9b8d6c;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.tab.active {
+  color: #e0b83e;
+
+  border-bottom: 2px solid #e0b83e;
+}
+
+
+/* =========================
+   SCHEDULE LIST
+========================= */
+
+.schedule-list {
+  max-width: 1450px;
+
+  margin: 35px auto 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.schedule-card {
+  display: grid;
+
+  grid-template-columns:
+    1.5fr
+    auto
+    1.5fr
+    1fr
+    auto;
+
+  align-items: center;
+
+  gap: 25px;
+
+  padding: 28px 30px;
+
+  background: #151d33;
+
+  border: 1px solid #26304a;
+  border-radius: 18px;
+}
+
+
+/* =========================
+   STATION / TIME
+========================= */
+
+.station,
+.departure-time {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  span {
+    font-size: 12px;
+
+    letter-spacing: 1px;
+
+    opacity: 0.55;
+  }
+
+  strong {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.route-arrow {
+  font-size: 24px;
+
+  opacity: 0.5;
+}
+
+
+/* =========================
+   BOOK BUTTON
+========================= */
+
+.book-btn {
+  padding: 12px 22px;
+
+  border: 1px solid #d8ad36;
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: #d8ad36;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+
+/* =========================
+   TABS
+========================= */
+
+.tabs {
+  display: flex;
+  align-items: center;
+
+  gap: 38px;
+
+  margin-top: 42px;
+
+  padding: 0 0 0 36px;
+
+  border-bottom: 1px solid #202a44;
+
+  button {
+    position: relative;
+
+    padding: 18px 4px 22px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #9c9077;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    &:hover {
+      color: #e3b541;
+    }
+
+    &.active {
+      color: #e3b541;
+    }
+
+    &.active::after {
+      content: '';
+
+      position: absolute;
+
+      left: 0;
+      right: 0;
+      bottom: -1px;
+
+      height: 2px;
+
+      background: #e3b541;
     }
   }
-  
-  .train-info {
-    h1 {
-      margin: 25px 0;
-      font-size: 48px;
+}
+
+
+/* =========================
+   COACH LIST
+========================= */
+
+.coach-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+
+  margin-top: 38px;
+
+  padding: 0 36px 40px;
+}
+
+
+/* =========================
+   COACH CARD
+========================= */
+
+.coach-card {
+  display: grid;
+
+  grid-template-columns:
+    minmax(180px, 1fr)
+    minmax(180px, 1fr)
+    minmax(120px, 180px)
+    minmax(90px, 120px);
+
+  align-items: center;
+
+  min-height: 88px;
+
+  padding: 0 38px;
+
+  background: #141c2f;
+
+  border: 1px solid #26324d;
+  border-radius: 18px;
+
+  transition: 0.2s ease;
+
+  &:hover {
+    border-color: #3b496a;
+
+    transform: translateY(-1px);
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+  }
+
+  span {
+    font-size: 13px;
+    font-weight: 500;
+
+    color: #8f8a7f;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+  }
+
+  strong {
+    font-size: 16px;
+    font-weight: 600;
+
+    color: #f4edda;
+  }
+
+  div:last-child {
+    align-items: flex-end;
+
+    strong {
+      color: #e3b541;
+
+      font-size: 18px;
       font-weight: 700;
     }
   }
-  
-  .train-number {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    color: #d8ad36;
-  }
-  
-  .train-stats {
-    display: flex;
-    gap: 55px;
-  
-    div {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-  
-    span {
-      font-size: 14px;
-      letter-spacing: 1px;
-      opacity: 0.6;
-    }
-  
-    strong {
-      font-size: 24px;
-    }
-
-    
-  }
-
-  .detail-tabs {
-    max-width: 1450px;
-    margin: 65px auto 0;
-    display: flex;
-    gap: 20px;
-    border-bottom: 1px solid #273047;
-  }
-  
-  .tab {
-    min-width: 170px;
-    padding: 18px 20px 22px;
-  
-    border: none;
-    background: transparent;
-  
-    color: #9b8d6c;
-    font-size: 15px;
-    font-weight: 600;
-  
-    cursor: pointer;
-  }
-  
-  .tab.active {
-    color: #e0b83e;
-    border-bottom: 2px solid #e0b83e;
-  }
-
-  .schedule-list {
-    max-width: 1450px;
-    margin: 35px auto 0;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-  
-  .schedule-card {
-    display: grid;
-    grid-template-columns: 1.5fr auto 1.5fr 1fr auto;
-    align-items: center;
-    gap: 25px;
-  
-    padding: 28px 30px;
-  
-    background: #151d33;
-    border: 1px solid #26304a;
-    border-radius: 18px;
-  }
-  
-  .station,
-  .departure-time {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  
-    span {
-      font-size: 12px;
-      letter-spacing: 1px;
-      opacity: 0.55;
-    }
-  
-    strong {
-      font-size: 16px;
-      font-weight: 600;
-    }
-  }
-  
-  .route-arrow {
-    font-size: 24px;
-    opacity: 0.5;
-  }
-  
-  .book-btn {
-    padding: 12px 22px;
-  
-    border: 1px solid #d8ad36;
-    border-radius: 10px;
-  
-    background: transparent;
-    color: #d8ad36;
-  
-    font-weight: 600;
-  
-    cursor: pointer;
-  }
+}
 
 
-  .tabs {
-    display: flex;
-    align-items: center;
-    gap: 38px;
-  
-    margin-top: 42px;
-    padding: 0 0 0 36px;
-  
-    border-bottom: 1px solid #202a44;
-  
-    button {
-      position: relative;
-  
-      padding: 18px 4px 22px;
-  
-      border: none;
-      background: transparent;
-  
-      color: #9c9077;
-  
-      font-size: 16px;
-      font-weight: 600;
-  
-      cursor: pointer;
-  
-      transition: 0.2s ease;
-  
-      &:hover {
-        color: #e3b541;
-      }
-  
-      &.active {
-        color: #e3b541;
-      }
-  
-      &.active::after {
-        content: '';
-  
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: -1px;
-  
-        height: 2px;
-  
-        background: #e3b541;
-      }
-    }
-  }
-  
-  
-  .coach-list {
-    display: flex;
-    flex-direction: column;
-  
-    gap: 18px;
-  
-    margin-top: 38px;
-    padding: 0 36px 40px;
-  }
-  
-  
-  .coach-card {
-    display: grid;
-  
-    grid-template-columns:
-      minmax(180px, 1fr)
-      minmax(180px, 1fr)
-      minmax(120px, 180px)
-      minmax(90px, 120px);
-  
-    align-items: center;
-  
-    min-height: 88px;
-  
-    padding: 0 38px;
-  
-    background: #141c2f;
-  
-    border: 1px solid #26324d;
-    border-radius: 18px;
-  
-    transition: 0.2s ease;
-  
-    &:hover {
-      border-color: #3b496a;
-      transform: translateY(-1px);
-    }
-  
-    div {
-      display: flex;
-      flex-direction: column;
-  
-      gap: 6px;
-    }
-  
-    span {
-      font-size: 13px;
-      font-weight: 500;
-  
-      color: #8f8a7f;
-  
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
-  
-    strong {
-      font-size: 16px;
-      font-weight: 600;
-  
-      color: #f4edda;
-    }
-  
-    div:last-child {
-      align-items: flex-end;
-  
-      strong {
-        color: #e3b541;
-  
-        font-size: 18px;
-        font-weight: 700;
-      }
-    }
+/* =========================
+   COACH CLASS
+========================= */
+
+.coach-class {
+  width: fit-content;
+
+  padding: 5px 11px;
+
+  border-radius: 20px;
+
+  font-size: 13px !important;
+  font-weight: 600 !important;
+
+  &.business {
+    color: #e3b541 !important;
+
+    background: rgba(227, 181, 65, 0.12);
+
+    border: 1px solid rgba(227, 181, 65, 0.25);
   }
 
-  .coach-class {
-    width: fit-content;
-    padding: 5px 11px;
-  
+  &.second {
+    color: #45c995 !important;
+
+    background: rgba(69, 201, 149, 0.1);
+
+    border: 1px solid rgba(69, 201, 149, 0.2);
+  }
+
+  &.other {
+    color: #8ca9ff !important;
+
+    background: rgba(140, 169, 255, 0.1);
+
+    border: 1px solid rgba(140, 169, 255, 0.2);
+  }
+}
+
+
+/* =========================
+   COACH FILTERS
+========================= */
+
+.coach-filters {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin: 28px 36px 0;
+
+  button {
+    padding: 8px 18px;
+
+    border: 1px solid #293550;
     border-radius: 20px;
-  
-    font-size: 13px !important;
-    font-weight: 600 !important;
-  
-    &.business {
-      color: #e3b541 !important;
-      background: rgba(227, 181, 65, 0.12);
-      border: 1px solid rgba(227, 181, 65, 0.25);
+
+    background: #141c2f;
+
+    color: #8f8a7f;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    &:hover {
+      color: #e3b541;
+
+      border-color: rgba(227, 181, 65, 0.5);
     }
-  
-    &.second {
-      color: #45c995 !important;
-      background: rgba(69, 201, 149, 0.1);
-      border: 1px solid rgba(69, 201, 149, 0.2);
-    }
-  
-    &.other {
-      color: #8ca9ff !important;
-      background: rgba(140, 169, 255, 0.1);
-      border: 1px solid rgba(140, 169, 255, 0.2);
+
+    &.active {
+      color: #0f1728;
+
+      background: #e3b541;
+
+      border-color: #e3b541;
     }
   }
+}
+
+/* =========================
+   SCHEDULE SKELETON
+========================= */
+
+.schedule-skeleton {
+  pointer-events: none;
+}
+
+.schedule-skeleton-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.schedule-skeleton-label {
+  width: 75px;
+  height: 11px;
+
+  border-radius: 4px;
+}
+
+.schedule-skeleton-text {
+  width: 150px;
+  max-width: 100%;
+  height: 17px;
+
+  border-radius: 5px;
+}
+
+.schedule-skeleton-time {
+  width: 80px;
+  height: 17px;
+
+  border-radius: 5px;
+}
+
+.schedule-skeleton-arrow {
+  width: 22px;
+  height: 12px;
+
+  border-radius: 4px;
+}
+
+.schedule-skeleton-button {
+  width: 105px;
+  height: 42px;
+
+  border-radius: 10px;
+}
 
 
-  .coach-filters {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  
-    margin: 28px 36px 0;
-  
-    button {
-      padding: 8px 18px;
-  
-      border: 1px solid #293550;
-      border-radius: 20px;
-  
-      background: #141c2f;
-      color: #8f8a7f;
-  
-      font-size: 13px;
-      font-weight: 600;
-  
-      cursor: pointer;
-      transition: 0.2s ease;
-  
-      &:hover {
-        color: #e3b541;
-        border-color: rgba(227, 181, 65, 0.5);
-      }
-  
-      &.active {
-        color: #0f1728;
-        background: #e3b541;
-        border-color: #e3b541;
-      }
-    }
+/* =========================
+   SHIMMER
+========================= */
+
+.skeleton-animation {
+  background: linear-gradient(
+    90deg,
+    #182137 25%,
+    #2a354f 50%,
+    #182137 75%
+  );
+
+  background-size: 200% 100%;
+
+  animation: schedule-skeleton-loading 1.4s infinite linear;
+}
+
+@keyframes schedule-skeleton-loading {
+  0% {
+    background-position: 200% 0;
   }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+  .schedule-skeleton {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .schedule-skeleton-arrow {
+    display: none;
+  }
+
+  .schedule-skeleton-text {
+    width: 65%;
+  }
+
+  .schedule-skeleton-button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,120 @@
+/* =========================
+   TRAINS SKELETON
+========================= */
+
+.trains-skeleton {
+    width: min(1200px, calc(100% - 40px));
+  
+    margin: 40px auto;
+  
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .skeleton-card {
+    min-height: 190px;
+  
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  
+    padding: 22px;
+  
+    box-sizing: border-box;
+  
+    background: #11192c;
+  
+    border: 1px solid #26314a;
+    border-radius: 18px;
+  }
+  
+  .skeleton-image {
+    width: 280px;
+    min-width: 280px;
+    height: 145px;
+  
+    border-radius: 12px;
+  }
+  
+  .skeleton-content {
+    flex: 1;
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  
+    gap: 18px;
+  }
+  
+  .skeleton-line {
+    height: 16px;
+    border-radius: 6px;
+  }
+  
+  .skeleton-title {
+    width: 45%;
+    height: 24px;
+  }
+  
+  .skeleton-medium {
+    width: 65%;
+  }
+  
+  .skeleton-small {
+    width: 35%;
+  }
+  
+  
+  /* SHIMMER ANIMATION */
+  
+  .skeleton-animation {
+    background: linear-gradient(
+      90deg,
+      #182137 25%,
+      #27324b 50%,
+      #182137 75%
+    );
+  
+    background-size: 200% 100%;
+  
+    animation: skeleton-loading 1.4s infinite linear;
+  }
+  
+  @keyframes skeleton-loading {
+    0% {
+      background-position: 200% 0;
+    }
+  
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  
+  
+  /* MOBILE */
+  
+  @media (max-width: 700px) {
+  
+    .skeleton-card {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .skeleton-image {
+      width: 100%;
+      min-width: 0;
+    }
+  
+    .skeleton-title {
+      width: 70%;
+    }
+  
+    .skeleton-medium {
+      width: 90%;
+    }
+  
+    .skeleton-small {
+      width: 55%;
+    }
+  }

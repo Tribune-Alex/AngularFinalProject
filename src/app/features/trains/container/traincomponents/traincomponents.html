@@ -1,3 +1,37 @@
+@if (
+  query()
+    ? searchNumber.isLoading()
+    : filterActive()
+      ? filteredTrains.isLoading()
+      : trains.isLoading()
+) {
+
+  <div class="trains-skeleton">
+
+    @for (item of [1, 2, 3]; track item) {
+
+      <div class="skeleton-card">
+
+        <div class="skeleton-image skeleton-animation"></div>
+
+        <div class="skeleton-content">
+
+          <div class="skeleton-line skeleton-title skeleton-animation"></div>
+
+          <div class="skeleton-line skeleton-medium skeleton-animation"></div>
+
+          <div class="skeleton-line skeleton-small skeleton-animation"></div>
+
+        </div>
+
+      </div>
+
+    }
+
+  </div>
+
+} @else {
+
 <app-train-card-components
   [trains]="
     query()
@@ -12,7 +46,7 @@
   [fromStationName]="fromStationName()"
   [toStationName]="toStationName()"
 
-  /* [selectedTrain]="selectedTrain.value()?.data ?? null" */
+
 
   (transSelected)="selectTrain($event)"
   (search)="searchInput($event)"
@@ -24,3 +58,4 @@
   [scheduleResults]="searchedSchedules.value()?.data.items ?? []"
   (scheduleSearch)="searchSchedule($event)"
 ></app-train-card-components>
+}

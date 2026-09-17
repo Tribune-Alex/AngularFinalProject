@@ -28,7 +28,11 @@ export class AuthPage {
   public forgotPasswordSent = signal(false);
   public forgotPasswordError = signal('');
   public resetToken = signal('');
+  public registerError = signal('');
   public returnUrl = signal('');
+  public verifyError = signal('');
+  public loginError = signal('');
+  public loginSuccess = signal(false);
 
 
   constructor() {
@@ -50,65 +54,120 @@ export class AuthPage {
 
 
   registerUser(data: RegisterRequest): void {
+
+    this.registerError.set('');
     this.registerData.set(data);
-
-    this.authService.register(data).subscribe(res => {
-      console.log('REGISTER RESPONSE:', res);
-
-      this.showVerify.set(true);
+  
+    this.authService.register(data).subscribe({
+  
+      next: (res) => {
+        console.log('REGISTER RESPONSE:', res);
+  
+        this.registerError.set('');
+        this.showVerify.set(true);
+      },
+  
+      error: (err) => {
+        console.log('REGISTER ERROR:', err);
+  
+        if (err.error?.detail === 'Email is already registered.') {
+  
+          this.registerError.set(
+            'An account with this email already exists.'
+          );
+  
+        } else {
+  
+          this.registerError.set(
+            err.error?.detail ?? 'Registration failed. Please try again.'
+          );
+  
+        }
+      }
+  
     });
   }
 
   verifyEmail(data: VerifyEmailRequest): void {
+
+    this.verifyError.set('');
+  
     const request: VerifyEmailRequest = {
       email: this.registerData()?.email ?? '',
       code: data.code
     };
-
-    this.authService.verifyEmail(request).subscribe(res => {
-
-      localStorage.setItem(
-        'accessToken',
-        res.data.accessToken
-      );
-
-      localStorage.setItem(
-        'refreshToken',
-        res.data.refreshToken
-      );
-
-      this.authService.isLoggedIn.set(true);
-
-      this.authCompleted.set(true);
-
-      console.log('TOKENS SAVED');
+  
+    this.authService.verifyEmail(request).subscribe({
+  
+      next: (res) => {
+  
+        localStorage.setItem(
+          'accessToken',
+          res.data.accessToken
+        );
+  
+        localStorage.setItem(
+          'refreshToken',
+          res.data.refreshToken
+        );
+  
+        this.authService.isLoggedIn.set(true);
+        this.authCompleted.set(true);
+  
+        this.verifyError.set('');
+  
+        console.log('TOKENS SAVED');
+      },
+  
+      error: (err) => {
+  
+        console.log('VERIFY ERROR:', err);
+  
+        this.verifyError.set(
+          err.error?.detail ?? 'Invalid verification code. Please try again.'
+        );
+      }
+  
     });
   }
 
   loginUser(data: LoginRequest): void {
-    this.authService.login(data).subscribe(res => {
 
-      localStorage.setItem(
-        'accessToken',
-        res.data.accessToken
-      );
-
-      localStorage.setItem(
-        'refreshToken',
-        res.data.refreshToken
-      );
-
-      this.authService.isLoggedIn.set(true);
-
-      this.authCompleted.set(true);
-
-      console.log('LOGIN TOKENS SAVED');
-
-      if (this.returnUrl()) {
-        this.router.navigateByUrl(this.returnUrl());
-      } else {
-        this.router.navigate(['/trains']);
+    this.loginError.set('');
+  
+    this.authService.login(data).subscribe({
+  
+      next: (res) => {
+  
+        localStorage.setItem(
+          'accessToken',
+          res.data.accessToken
+        );
+  
+        localStorage.setItem(
+          'refreshToken',
+          res.data.refreshToken
+        );
+  
+        this.authService.isLoggedIn.set(true);
+  
+        this.loginError.set('');
+        this.loginSuccess.set(true);
+  
+        console.log('LOGIN TOKENS SAVED');
+  
+        
+      },
+  
+      error: (err) => {
+  
+        console.log('LOGIN ERROR:', err);
+  
+        this.loginError.set(
+          err.error?.detail ?? 'Invalid email or password.'
+        );
       }
+  
     });
   }
 
@@ -178,6 +237,18 @@ export class AuthPage {
         console.log('RESET PASSWORD ERROR:', err);
       }
     });
+  }
+
+  continueAfterLogin(): void {
+
+    this.loginSuccess.set(false);
+    this.authCompleted.set(true);
+  
+    if (this.returnUrl()) {
+      this.router.navigateByUrl(this.returnUrl());
+    } else {
+      this.router.navigate(['/trains']);
+    }
   }
 
 }

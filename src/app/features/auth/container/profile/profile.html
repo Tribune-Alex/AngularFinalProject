@@ -24,11 +24,11 @@
 
         <div class="sidebar-divider"></div>
 
-        <button class="sidebar-item active">
+        <button class="sidebar-item" [class.active]="activeSection() === 'profile'" (click)="openProfile()">
             My Profile
         </button>
 
-        <button class="sidebar-item">
+        <button class="sidebar-item" [class.active]="activeSection() === 'bookings'" (click)="openBookings()">
             My Bookings
         </button>
 
@@ -42,7 +42,7 @@
 
     </aside>
 
-
+    @if (activeSection() === 'profile') {
     <section class="profile-content">
 
         <h1>Personal Information</h1>
@@ -112,6 +112,11 @@
                 Profile updated successfully
             </p>
             }
+            @if (updateError()) {
+                <p class="update-error">
+                  {{ updateError() }}
+                </p>
+              }
 
             <button class="save-btn" (click)="saveProfile()">
                 Save Changes
@@ -120,7 +125,345 @@
         </div>
 
     </section>
+    }
+    <!-- MY BOOKINGS -->
+    @if (activeSection() === 'bookings') {
 
+    <section class="profile-content">
+        @if (selectedBookingId() === null) {
+        <h1>My Bookings</h1>
+
+        <p class="subtitle">
+            View and manage your train bookings
+        </p>
+
+
+        <!-- FILTER -->
+        <div class="booking-filter">
+
+            <div class="booking-filter-field">
+                <label>FROM DATE</label>
+
+                <input type="date" [value]="fromDate()" (change)="updateFromDate($event)">
+            </div>
+
+
+            <div class="booking-filter-field">
+                <label>TO DATE</label>
+
+                <input type="date" [value]="toDate()" (change)="updateToDate($event)">
+            </div>
+
+
+            <div class="booking-filter-actions">
+
+                <button class="filter-btn" (click)="applyBookingFilter()">
+                    Filter
+                </button>
+
+                <button class="clear-btn" (click)="clearBookingFilter()">
+                    Clear
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOOKINGS -->
+        @if (displayedBookings(); as bookingList) {
+
+        <div class="bookings-list">
+
+            @for (booking of bookingList; track booking.id) {
+
+            <div class="booking-card">
+
+                <!-- LEFT SIDE -->
+                <div class="booking-main">
+
+                    <div class="booking-route">
+
+                        <strong>
+                            {{ booking.origin }}
+                        </strong>
+
+                        <span class="route-arrow">→</span>
+
+                        <strong>
+                            {{ booking.destination }}
+                        </strong>
+
+                    </div>
+
+                    <div class="booking-trip-info">
+
+                        <span>
+                            {{ booking.trainName }} #{{ booking.trainNumber }}
+                        </span>
+
+                        <span class="dot">·</span>
+
+                        <span>
+                            {{ booking.departureTime.substring(0, 5) }}
+                        </span>
+
+                        <span class="dot">·</span>
+
+                        <span>
+                            {{ booking.travelDate.substring(0, 10) }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RIGHT SIDE -->
+                <div class="booking-details">
+
+                    <span class="booking-class">
+                        {{ booking.coachClass }}
+                    </span>
+
+                    <div class="booking-seat">
+                        <span>SEAT</span>
+                        <strong>{{ booking.seatNumber }}</strong>
+                    </div>
+
+                    <div class="booking-coach">
+                        <span>COACH</span>
+                        <strong>{{ booking.coachNumber }}</strong>
+                    </div>
+
+                    <div class="booking-price">
+                        <span>PRICE</span>
+                        <strong>${{ booking.price }}</strong>
+                    </div>
+
+                    <button class="details-btn" (click)="openBookingDetails(booking.id)">
+                        Details
+                    </button>
+
+                    <button class="delete-booking-btn" (click)="openDeleteBooking(booking.id)">
+                        Delete
+                    </button>
+
+                </div>
+                @if (bookingToDelete() === booking.id) {
+
+                <div class="delete-booking-confirm">
+
+                    <p>
+                        Are you sure you want to delete this booking?
+                    </p>
+
+                    <div class="delete-booking-actions">
+
+                        <button class="cancel-booking-delete" (click)="cancelDeleteBooking()">
+                            Cancel
+                        </button>
+
+                        <button class="confirm-booking-delete" (click)="deleteBooking(booking.id)">
+                            Yes, Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+                }
+
+            </div>
+
+            }
+
+        </div>
+
+        }
+        }
+
+        @if (
+        selectedBookingId() !== null &&
+        bookingDetails.value()?.data;
+        as details
+        ) {
+
+        <div class="booking-details-page">
+
+            <button class="back-bookings-btn" (click)="closeBookingDetails()">
+                ← Back to bookings
+            </button>
+
+
+            <div class="details-image">
+
+                <img [src]="details.trainThumbnail" [alt]="details.trainName">
+
+            </div>
+
+
+            <div class="details-route-row">
+
+                <div class="details-route">
+
+                    <h2>
+                        {{ details.origin }}
+                    </h2>
+
+                    <span class="details-arrow">→</span>
+
+                    <h2>
+                        {{ details.destination }}
+                    </h2>
+
+                </div>
+
+                <strong class="details-total-price">
+                    ${{ details.price }}
+                </strong>
+
+            </div>
+
+
+            <div class="details-info-list">
+
+                <div class="details-info-row">
+                    <span>Train</span>
+
+                    <strong>
+                        {{ details.trainName }}
+                        #{{ details.trainNumber }}
+                    </strong>
+                </div>
+
+                <div class="details-info-row">
+                    <span>Departure Time</span>
+
+                    <strong>
+                        {{ details.departureTime.substring(0, 5) }}
+                    </strong>
+                </div>
+
+                <div class="details-info-row">
+                    <span>Coach</span>
+
+                    <strong>
+                        {{ details.coachNumber }}
+                        — {{ details.coachClass }}
+                    </strong>
+                </div>
+
+                <div class="details-info-row">
+                    <span>Ticket Price</span>
+
+                    <strong>
+                        ${{ details.price }}
+                    </strong>
+                </div>
+
+                <div class="details-info-row">
+                    <span>Seat</span>
+
+                    <strong>
+                        {{ details.seatNumber }}
+                    </strong>
+                </div>
+
+                <div class="details-info-row">
+                    <span>Travel Date</span>
+
+                    <strong>
+                        {{ details.travelDate.substring(0, 10) }}
+                    </strong>
+                </div>
+
+                <div class="details-info-row">
+                    <span>Booked On</span>
+
+                    <strong>
+                        {{ details.createdAt.substring(0, 10) }}
+                    </strong>
+                </div>
+
+            </div>
+            @if (showChangeDate()) {
+
+            <div class="change-date-panel">
+
+                <div class="change-date-field">
+
+                    <label>NEW TRAVEL DATE</label>
+
+                    <input type="date" [value]="newTravelDate()" (change)="updateNewTravelDate($event)">
+
+                </div>
+
+                <div class="change-date-actions">
+
+                    <button class="cancel-date-btn" (click)="cancelChangeDate()">
+                        Cancel
+                    </button>
+
+                    <button class="save-date-btn" (click)="saveNewTravelDate()">
+                        Save New Date
+                    </button>
+
+                </div>
+
+            </div>
+
+            }
+
+
+            <div class="details-actions">
+
+                <button class="change-date-btn" (click)="openChangeDate()">
+                    Change Date
+                </button>
+
+                <button class="delete-details-btn" (click)="openDeleteBooking(details.id)">
+                    Delete Booking
+                </button>
+
+            </div>
+            @if (bookingToDelete() === details.id) {
+
+                <div class="details-delete-confirm">
+            
+                    <p>
+                        Are you sure you want to delete this booking?
+                        This action cannot be undone.
+                    </p>
+            
+                    <div class="details-delete-actions">
+            
+                        <button
+                            class="cancel-booking-delete"
+                            (click)="cancelDeleteBooking()"
+                        >
+                            Cancel
+                        </button>
+            
+                        <button
+                            class="confirm-booking-delete"
+                            (click)="deleteBooking(details.id)"
+                        >
+                            Yes, Delete Booking
+                        </button>
+            
+                    </div>
+            
+                </div>
+            
+            }
+
+        </div>
+
+        }
+    </section>
+
+    }
 </div>
 
 }

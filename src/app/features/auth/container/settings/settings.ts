@@ -37,6 +37,14 @@ export class Settings {
     this.router.navigate(['/profile']);
   }
 
+  openBookings(): void {
+    this.router.navigate(['/profile'], {
+      queryParams: {
+        section: 'bookings'
+      }
+    });
+  }
+
   logout(): void {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');

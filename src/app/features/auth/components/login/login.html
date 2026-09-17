@@ -104,3 +104,61 @@
     </div>
 
 </div>
+
+@if (loginError()) {
+
+    <div class="login-error-overlay">
+  
+      <div class="login-error-modal">
+  
+        <div class="error-icon">
+          !
+        </div>
+  
+        <h2>Login Failed</h2>
+  
+        <p>
+          {{ loginError() }}
+        </p>
+  
+        <button
+          class="try-again-btn"
+          (click)="closeError()"
+        >
+          Try Again
+        </button>
+  
+      </div>
+  
+    </div>
+  
+  }
+
+  @if (loginSuccess()) {
+
+    <div class="login-success-overlay">
+  
+      <div class="login-success-modal">
+  
+        <div class="success-icon">
+          ✓
+        </div>
+  
+        <h2>Welcome Back!</h2>
+  
+        <p>
+          You have successfully signed in to your account.
+        </p>
+  
+        <button
+          class="continue-btn"
+          (click)="continueAfterLogin()"
+        >
+          Continue
+        </button>
+  
+      </div>
+  
+    </div>
+  
+  }

@@ -1,4 +1,4 @@
-import { Component, output, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { VerifyEmailRequest } from '../../models/authmodels';
 
 @Component({
@@ -10,9 +10,15 @@ import { VerifyEmailRequest } from '../../models/authmodels';
 export class VerifyEmail {
   public email = signal('');
   public code = signal('');
+  public verifyError = input<string>('');
 
   verifySubmit = output<VerifyEmailRequest>();
   resendRequested = output<void>();
+  errorClosed = output<void>();
+
+  closeError(): void {
+    this.errorClosed.emit();
+  }
 
   submitVerify(): void {
     const data: VerifyEmailRequest = {

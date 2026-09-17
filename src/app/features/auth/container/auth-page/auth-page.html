@@ -1,69 +1,57 @@
 @if (resetToken()) {
 
-  <app-reset-password
-    [token]="resetToken()"
-    (resetSubmit)="resetPassword($event)"
-  ></app-reset-password>
+<app-reset-password [token]="resetToken()" (resetSubmit)="resetPassword($event)"></app-reset-password>
 
 } @else {
 
-  @if (!authCompleted()) {
+@if (!authCompleted()) {
 
-    @if (!showVerify()) {
+@if (!showVerify()) {
 
-      @if (showForgotPassword()) {
+@if (showForgotPassword()) {
 
-        <app-forgot-password
-          (forgotSubmit)="forgetPassword($event)"
-          (backToLogin)="openLogin()"
-        ></app-forgot-password>
+<app-forgot-password (forgotSubmit)="forgetPassword($event)" (backToLogin)="openLogin()"></app-forgot-password>
 
-        @if (forgotPasswordSent()) {
-          <p class="success-message">
-            Reset link has been sent to your email.
-          </p>
-        }
+@if (forgotPasswordSent()) {
+<p class="success-message">
+  Reset link has been sent to your email.
+</p>
+}
 
-        @if (forgotPasswordError()) {
-          <p class="error-message">
-            {{ forgotPasswordError() }}
-          </p>
-        }
+@if (forgotPasswordError()) {
+<p class="error-message">
+  {{ forgotPasswordError() }}
+</p>
+}
 
-      } @else {
+} @else {
 
-        @if (!showLogin()) {
+@if (!showLogin()) {
 
-          <app-register
-            (registerSubmit)="registerUser($event)"
-            (showLogin)="openLogin()"
-          ></app-register>
+<app-register [registerError]="registerError()" (registerSubmit)="registerUser($event)"
+  (showLogin)="openLogin()"></app-register>
 
-        }
+}
 
-        @if (showLogin()) {
+@if (showLogin()) {
 
-          <app-login
-            (loginSubmit)="loginUser($event)"
-            (showRegister)="openRegister()"
-            (forgotPassword)="openForgotPassword()"
-          ></app-login>
+<app-login (loginSubmit)="loginUser($event)" (showRegister)="openRegister()" (forgotPassword)="openForgotPassword()"
+  [loginError]="loginError()" (errorClosed)="loginError.set('')" [loginSuccess]="loginSuccess()"
+(continueLogin)="continueAfterLogin()"></app-login>
 
-        }
+}
 
-      }
+}
 
-    }
+}
 
-    @if (showVerify()) {
+@if (showVerify()) {
 
-      <app-verify-email
-        (verifySubmit)="verifyEmail($event)"
-        (resendRequested)="resendVerification()"
-      ></app-verify-email>
+<app-verify-email [verifyError]="verifyError()" (verifySubmit)="verifyEmail($event)"
+  (resendRequested)="resendVerification()" (errorClosed)="verifyError.set('')"></app-verify-email>
 
-    }
+}
 
-  }
+}
 
 }

@@ -96,3 +96,32 @@
     </div>
 
 </div>
+
+@if (verifyError()) {
+
+    <div class="verify-error-overlay">
+  
+      <div class="verify-error-modal">
+  
+        <div class="error-icon">
+          !
+        </div>
+  
+        <h2>Verification Failed</h2>
+  
+        <p>
+          {{ verifyError() }}
+        </p>
+  
+        <button
+          class="try-again-btn"
+          (click)="closeError()"
+        >
+          Try Again
+        </button>
+  
+      </div>
+  
+    </div>
+  
+  }

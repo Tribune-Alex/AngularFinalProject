@@ -1,159 +1,248 @@
+<!-- COACH -->
 @if (coaches.value()?.data.items; as coachList) {
 
-    <div class="coach-section">
-  
-      <div class="coach-header">
-        <span class="section-label">COACH</span>
-        <h2>Select coach</h2>
-      </div>
-  
-      <div class="coach-list">
-  
-        @for (coach of coachList; track coach.id) {
-  
-          <button
-            class="coach-option"
-            [class.selected]="coach.id === coachId()"
-            (click)="selectCoach(coach.id)"
-          >
-            <span class="coach-number">
-              Coach #{{ coach.number }}
-            </span>
-  
-            <span class="coach-class">
-              {{ coach.class }}
-            </span>
-  
-            <span class="coach-price">
-              ${{ coach.price }}
-            </span>
-          </button>
-  
-        }
-  
-      </div>
-  
+  <div class="coach-section">
+
+    <div class="coach-header">
+      <span class="section-label">COACH</span>
+      <h2>Select coach</h2>
     </div>
-  
-  }
-  
-  
-  <!-- DATE -->
-  <div class="date-section">
-  
-    <div class="date-header">
-      <span class="section-label">TRAVEL DATE</span>
-      <h2>Select your travel date</h2>
-    </div>
-  
-    <div class="date-picker-box">
-      <input
-        type="date"
-        [value]="selectedDate()"
-        (change)="selectDate($any($event.target).value)"
-      >
-    </div>
-  
-    @if (selectedDate()) {
-      <div class="selected-date-info">
-        Selected date:
-        <strong>{{ selectedDate() }}</strong>
-      </div>
-    }
-  
-  </div>
-  
-  
-  <!-- SCHEDULE -->
-  <div class="schedule-section">
-  
-    <div class="schedule-header">
-      <span class="section-label">SCHEDULE</span>
-      <h2>Select departure</h2>
-    </div>
-  
-    <div class="schedule-list">
-  
-      @for (schedule of trainSchedules(); track schedule.id) {
-  
+
+    <div class="coach-list">
+
+      @for (coach of coachList; track coach.id) {
+
         <button
-          class="schedule-option"
-          [class.selected]="selectedScheduleId() === schedule.id"
-          (click)="selectSchedule(schedule.id)"
+          class="coach-option"
+          [class.selected]="coach.id === coachId()"
+          (click)="selectCoach(coach.id)"
         >
-  
-          <div class="route">
-            <strong>{{ schedule.origin }}</strong>
-  
-            <span>→</span>
-  
-            <strong>{{ schedule.destination }}</strong>
-          </div>
-  
-          <div class="departure-time">
-            {{ schedule.departureTime }}
-          </div>
-  
+          <span class="coach-number">
+            Coach #{{ coach.number }}
+          </span>
+
+          <span class="coach-class">
+            {{ coach.class }}
+          </span>
+
+          <span class="coach-price">
+            ${{ coach.price }}
+          </span>
         </button>
-  
+
       }
-  
+
     </div>
-  
+
   </div>
-  
-  
-  <!-- SEATS -->
-  @if (availableSeats.value()?.data; as seats) {
-  
-    <div class="seats-section">
-  
-      <div class="seats-header">
-        <span class="section-label">SEATS</span>
-        <h2>Select your seats</h2>
-      </div>
-  
-  
-      <!-- LEGEND -->
-      <div class="seat-legend">
-  
-        <div>
-          <span class="legend-box available"></span>
-          Available
-        </div>
-  
-        <div>
-          <span class="legend-box selected"></span>
-          Selected
-        </div>
-  
-        <div>
-          <span class="legend-box unavailable"></span>
-          Unavailable
-        </div>
-  
-      </div>
-  
-  
-      <!-- SEAT MAP -->
-      <div class="seat-map">
-  
-        @for (seat of seats; track seat.id) {
-  
-          <button
-            class="seat"
-            [disabled]="!seat.isAvailable"
-            [class.selected]="selectedSeatIds().includes(seat.id)"
-            [class.unavailable]="!seat.isAvailable"
-            (click)="selectSeat(seat.id)"
-          >
-            {{ seat.number }}
-          </button>
-  
-        }
-  
-      </div>
-  
+
+}
+
+
+<!-- DATE -->
+<div class="date-section">
+
+  <div class="date-header">
+    <span class="section-label">TRAVEL DATE</span>
+    <h2>Select your travel date</h2>
+  </div>
+
+  <div class="date-picker-box">
+    <input
+      type="date"
+      [value]="selectedDate()"
+      (change)="selectDate($any($event.target).value)"
+    >
+  </div>
+
+  @if (selectedDate()) {
+
+    <div class="selected-date-info">
+      Selected date:
+      <strong>{{ selectedDate() }}</strong>
     </div>
-  
+
   }
+
+</div>
+
+
+<!-- SCHEDULE -->
+<div class="schedule-section">
+
+  <div class="schedule-header">
+    <span class="section-label">SCHEDULE</span>
+    <h2>Select departure</h2>
+  </div>
+
+  <div class="schedule-list">
+
+    @for (schedule of trainSchedules(); track schedule.id) {
+
+      <button
+        class="schedule-option"
+        [class.selected]="selectedScheduleId() === schedule.id"
+        (click)="selectSchedule(schedule.id)"
+      >
+
+        <div class="route">
+          <strong>{{ schedule.origin }}</strong>
+
+          <span>→</span>
+
+          <strong>{{ schedule.destination }}</strong>
+        </div>
+
+        <div class="departure-time">
+          {{ schedule.departureTime }}
+        </div>
+
+      </button>
+
+    }
+
+  </div>
+
+</div>
+
+
+<!-- SEATS -->
+@if (availableSeats.value()?.data; as seats) {
+
+  <div class="seats-section">
+
+    <div class="seats-header">
+      <span class="section-label">SEATS</span>
+      <h2>Select your seats</h2>
+    </div>
+
+
+    <!-- LEGEND -->
+    <div class="seat-legend">
+
+      <div>
+        <span class="legend-box available"></span>
+        Available
+      </div>
+
+      <div>
+        <span class="legend-box selected"></span>
+        Selected
+      </div>
+
+      <div>
+        <span class="legend-box unavailable"></span>
+        Unavailable
+      </div>
+
+    </div>
+
+
+    <!-- SEAT MAP -->
+    <div class="seat-map">
+
+      @for (seat of seats; track seat.id) {
+
+        <button
+          class="seat"
+          [disabled]="!seat.isAvailable"
+          [class.selected]="selectedSeatIds().includes(seat.id)"
+          [class.unavailable]="!seat.isAvailable"
+          (click)="selectSeat(seat.id)"
+        >
+          {{ seat.number }}
+        </button>
+
+      }
+
+    </div>
+
+  </div>
+
+}
+
+
+<!-- BOOKING -->
+@if (
+  selectedDate() &&
+  selectedScheduleId() !== null &&
+  selectedSeatIds().length > 0
+) {
+
+  <div class="booking-actions">
+
+    @if (!bookingSuccess()) {
+
+      <button
+        class="book-button"
+        [disabled]="bookingLoading()"
+        (click)="createBooking()"
+      >
+
+        @if (bookingLoading()) {
+          Booking...
+        } @else {
+          Book selected seats
+        }
+
+      </button>
+
+
+      <!-- BOOKING ERROR -->
+      @if (bookingError()) {
+
+        <p class="booking-error">
+          {{ bookingError() }}
+        </p>
+
+      }
+
+    } @else {
+
+      <!-- BOOKING SUCCESS MODAL -->
+    
+      <div class="booking-success-overlay">
+    
+        <div class="booking-success-modal">
+    
+          <div class="success-icon">
+            ✓
+          </div>
+    
+          <h2>
+            Booking Confirmed!
+          </h2>
+    
+          <p>
+            Your seats have been successfully booked.
+            You can view and manage your trip in My Bookings.
+          </p>
+    
+          <div class="success-actions">
+    
+            <button
+              class="view-bookings-btn"
+              (click)="goToBookings()"
+            >
+              View My Bookings
+            </button>
+    
+            <button
+              class="close-success-btn"
+              (click)="closeBookingSuccess()"
+            >
+              Close
+            </button>
+    
+          </div>
+    
+        </div>
+    
+      </div>
+    
+    }
+
+  </div>
+
+}
+
