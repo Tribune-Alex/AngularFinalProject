@@ -4,6 +4,8 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UpdateUserRequest } from '../../models/authmodels';
 import { Trainservice } from '../../../trains/services/trainservice';
+import { Booking, BookingGroup } from '../../../trains/models/bookingmodels';
+import { forkJoin } from 'rxjs';
 
 @Component({
   imports: [],
@@ -31,8 +33,10 @@ export class Profile {
   public filterActive = signal<boolean>(false);
   public bookingToDelete = signal<number | null>(null);
   public selectedBookingId = signal<number | null>(null);
+  public selectedBookingIds = signal<number[]>([]);
   public showChangeDate = signal<boolean>(false);
   public newTravelDate = signal<string>('');
+  public changeDateError = signal<string>('');
 
   constructor() {
     effect(() => {
@@ -64,6 +68,7 @@ export class Profile {
           : ''
       );
     });
+    
     const section = this.route.snapshot.queryParamMap.get('section');
 
     if (section === 'bookings') {
@@ -131,12 +136,15 @@ export class Profile {
     return this.bookings.value()?.data.items ?? [];
   });
 
+  public groupedBookings = computed(() => {
+    const bookings = this.displayedBookings();
+  
+    return this.groupBookings(bookings);
+  });
+
   logout(): void {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-
-    this.authService.isLoggedIn.set(false);
-
+    this.authService.logout();
+  
     this.router.navigate(['/']);
   }
 
@@ -278,6 +286,11 @@ export class Profile {
   cancelChangeDate(): void {
     this.showChangeDate.set(false);
     this.newTravelDate.set('');
+    this.changeDateError.set('');
+  }
+
+  closeChangeDateError(): void {
+    this.changeDateError.set('');
   }
 
   openDeleteBooking(id: number): void {
@@ -307,12 +320,47 @@ export class Profile {
     });
   }
 
-  openBookingDetails(id: number): void {
-    this.selectedBookingId.set(id);
+  deleteBookingGroup(ids: number[]): void {
+    if (ids.length === 0) {
+      return;
+    }
+  
+    const requests = ids.map(id =>
+      this.trainService.deleteBooking(id)
+    );
+  
+    forkJoin(requests).subscribe({
+      next: (responses) => {
+        console.log('BOOKING GROUP DELETED:', responses);
+  
+        this.bookingToDelete.set(null);
+        this.selectedBookingId.set(null);
+  
+        this.bookings.reload();
+  
+        if (this.filterActive()) {
+          this.filteredBookings.reload();
+        }
+      },
+  
+      error: (error) => {
+        console.error('DELETE BOOKING GROUP ERROR:', error);
+      }
+    });
+  }
+
+  openBookingDetails(ids: number[]): void {
+    if (ids.length === 0) {
+      return;
+    }
+  
+    this.selectedBookingIds.set(ids);
+    this.selectedBookingId.set(ids[0]);
   }
 
   closeBookingDetails(): void {
     this.selectedBookingId.set(null);
+    this.selectedBookingIds.set([]);
   }
 
   openChangeDate(): void {
@@ -330,6 +378,8 @@ export class Profile {
   }
 
   saveNewTravelDate(): void {
+    this.changeDateError.set('');
+  
     const bookingId = this.selectedBookingId();
     const date = this.newTravelDate();
   
@@ -345,8 +395,11 @@ export class Profile {
       bookingId,
       data
     ).subscribe({
+  
       next: (response) => {
         console.log('BOOKING DATE UPDATED:', response);
+  
+        this.changeDateError.set('');
   
         this.showChangeDate.set(false);
         this.newTravelDate.set('');
@@ -361,7 +414,107 @@ export class Profile {
   
       error: (error) => {
         console.error('CHANGE DATE ERROR:', error);
+  
+        this.changeDateError.set(
+          error.error?.detail ??
+          'The selected seat is not available on this date. Please choose another date.'
+        );
       }
+  
     });
   }
+
+  private getBookingGroupKey(booking: Booking): string {
+    const createdAt = new Date(booking.createdAt).getTime();
+  
+    return [
+      booking.scheduleId,
+      booking.travelDate,
+      booking.trainNumber,
+      Math.floor(createdAt / 1000)
+    ].join('-');
+  }
+
+  private groupBookings(bookings: Booking[]): BookingGroup[] {
+    const groups = new Map<string, BookingGroup>();
+  
+    for (const booking of bookings) {
+      const key = this.getBookingGroupKey(booking);
+      const existingGroup = groups.get(key);
+  
+      if (existingGroup) {
+        existingGroup.bookingIds.push(booking.id);
+        existingGroup.seatIds.push(booking.seatId);
+        existingGroup.seatNumbers.push(booking.seatNumber);
+        existingGroup.totalPrice += booking.price;
+      
+        const existingCoach = existingGroup.coaches.find(
+          coach => coach.coachNumber === booking.coachNumber
+        );
+      
+        if (existingCoach) {
+          existingCoach.seatIds.push(booking.seatId);
+          existingCoach.seatNumbers.push(booking.seatNumber);
+          existingCoach.price += booking.price;
+        } else {
+          existingGroup.coaches.push({
+            coachNumber: booking.coachNumber,
+            coachClass: booking.coachClass,
+            seatIds: [booking.seatId],
+            seatNumbers: [booking.seatNumber],
+            price: booking.price
+          });
+        }
+      
+        continue;
+      }
+  
+      groups.set(key, {
+        bookingIds: [booking.id],
+  
+        travelDate: booking.travelDate,
+        scheduleId: booking.scheduleId,
+  
+        origin: booking.origin,
+        destination: booking.destination,
+        departureTime: booking.departureTime,
+  
+        totalPrice: booking.price,
+  
+        seatIds: [booking.seatId],
+        seatNumbers: [booking.seatNumber],
+  
+        coachNumber: booking.coachNumber,
+        coachClass: booking.coachClass,
+        coaches: [
+          {
+            coachNumber: booking.coachNumber,
+            coachClass: booking.coachClass,
+            seatIds: [booking.seatId],
+            seatNumbers: [booking.seatNumber],
+            price: booking.price
+          }
+        ],
+  
+        trainNumber: booking.trainNumber,
+        trainName: booking.trainName,
+  
+        createdAt: booking.createdAt
+      });
+    }
+  
+    return Array.from(groups.values());
+  }
+
+  public selectedBookingGroup = computed(() => {
+    const ids = this.selectedBookingIds();
+  
+    if (ids.length === 0) {
+      return null;
+    }
+  
+    return this.groupedBookings().find(group =>
+      group.bookingIds.some(id => ids.includes(id))
+    ) ?? null;
+  });
 }

@@ -66,16 +66,16 @@
         <div class="name-row">
 
           <input type="text" placeholder="First name" [value]="firstName()"
-            (input)="firstName.set($any($event.target).value)">
+  (input)="onFirstNameInput($event)">
 
-          <input type="text" placeholder="Last name" [value]="lastName()"
-            (input)="lastName.set($any($event.target).value)">
+<input type="text" placeholder="Last name" [value]="lastName()"
+  (input)="onLastNameInput($event)">
 
         </div>
 
 
         <input type="email" placeholder="Email address" [value]="email()"
-          (input)="email.set($any($event.target).value)">
+  (input)="onEmailInput($event)">
           @if (registerError()) {
             <p class="register-error">
               {{ registerError() }}
@@ -83,8 +83,50 @@
           }
 
 
-        <input type="password" placeholder="Password (min. 6 characters)" [value]="password()"
-          (input)="password.set($any($event.target).value)">
+          <div class="password-box">
+
+            <input
+              [type]="showPassword() ? 'text' : 'password'"
+              placeholder="Password (min. 8 characters)"
+              [value]="password()"
+              (input)="onPasswordInput($event)"
+            >
+          
+            <button
+              type="button"
+              class="password-toggle"
+              (click)="showPassword.set(!showPassword())"
+            >
+              @if (showPassword()) {
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M3 3l18 18"></path>
+                  <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path>
+                  <path d="M9.9 4.2A10.7 10.7 0 0 1 12 4c5 0 9 4 10 8a12.5 12.5 0 0 1-2.1 4.1"></path>
+                  <path d="M6.6 6.6A12.4 12.4 0 0 0 2 12c1 4 5 8 10 8a10.8 10.8 0 0 0 5.4-1.4"></path>
+                </svg>
+              } @else {
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              }
+            </button>
+          
+          </div>
 
         @if (passwordError()) {
         <p class="password-error">

@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Trainservice } from '../../../trains/services/trainservice';
+import { Authservice } from '../../../auth/services/authservice';
 
 @Component({
   imports: [],
@@ -12,6 +13,7 @@ export class Home {
   private router = inject(Router);
 
   public trainService = inject(Trainservice);
+  public authService = inject(Authservice);
 
   public stations = this.trainService.stations;
 
@@ -33,6 +35,20 @@ searchTrains(): void {
       to: this.toStation()
     }
   });
+}
+
+onFromStationChange(event: Event): void {
+  const select = event.target as HTMLSelectElement;
+  this.fromStation.set(select.value);
+}
+
+onToStationChange(event: Event): void {
+  const select = event.target as HTMLSelectElement;
+  this.toStation.set(select.value);
+}
+
+goProfile(): void {
+  this.router.navigate(['/profile']);
 }
 
 }

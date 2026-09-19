@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Trainservice } from '../../services/trainservice';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { CreateBooking } from '../../models/bookingmodels';
+import { forkJoin } from 'rxjs';
 
 @Component({
   imports: [],
@@ -15,14 +16,11 @@ export class BookingDate {
   private route = inject(ActivatedRoute);
   private trainService = inject(Trainservice);
   public selectedDate = signal<string>('');
-  public selectedScheduleId = signal<number | null>(
-    Number(this.route.snapshot.queryParamMap.get('scheduleId')) || null
-  );
-  public selectedSeatIds = signal<number[]>([]);
+  public selectedScheduleId = signal<number | null>(Number(this.route.snapshot.queryParamMap.get('scheduleId')) || null);
+  public selectedDatesBySchedule = signal<Record<number, string>>({});
+  public bookingSelection = signal<Record<number, Record<string, Record<number, number[]>>>>({});
   public trainId = Number(this.route.snapshot.paramMap.get('trainId'));
-  public coachId = signal<number>(
-    Number(this.route.snapshot.paramMap.get('coachId'))
-  );
+  public coachId = signal<number>(Number(this.route.snapshot.paramMap.get('coachId')));
 
   public bookingSuccess = signal<boolean>(false);
   public bookingLoading = signal<boolean>(false);
@@ -42,9 +40,24 @@ export class BookingDate {
   });
 
   selectDate(date: string): void {
+    const scheduleId = this.selectedScheduleId();
+
+    if (scheduleId === null) {
+      return;
+    }
+
     this.selectedDate.set(date);
-    console.log('SELECTED DATE:', date);
-  };
+
+    this.selectedDatesBySchedule.update(dates => ({
+      ...dates,
+      [scheduleId]: date
+    }));
+
+    console.log(
+      'SELECTED DATES BY SCHEDULE:',
+      this.selectedDatesBySchedule()
+    );
+  }
 
   public schedules = rxResource({
     stream: () => {
@@ -58,10 +71,28 @@ export class BookingDate {
     return items.filter(item => item.trainId === this.trainId);
   });
 
+  public selectedSeatsCount = computed(() => {
+    const selection = this.bookingSelection();
+
+    return Object.values(selection)
+      .flatMap(dates => Object.values(dates))
+      .flatMap(coaches => Object.values(coaches))
+      .reduce(
+        (total, seatIds) => total + seatIds.length,
+        0
+      );
+  });
+
 
   selectSchedule(id: number): void {
     this.selectedScheduleId.set(id);
+
+    const savedDate = this.selectedDatesBySchedule()[id] ?? '';
+
+    this.selectedDate.set(savedDate);
+
     console.log('SELECTED SCHEDULE ID:', id);
+    console.log('SCHEDULE DATE:', savedDate);
   }
 
   public availableSeats = rxResource({
@@ -90,76 +121,150 @@ export class BookingDate {
   });
 
   selectSeat(seatId: number): void {
-    const current = this.selectedSeatIds();
+    const scheduleId = this.selectedScheduleId();
+    const date = this.selectedDate();
+    const coachId = this.coachId();
 
-    if (current.includes(seatId)) {
-      this.selectedSeatIds.set(
-        current.filter(id => id !== seatId)
-      );
-    } else {
-      this.selectedSeatIds.set([
-        ...current,
-        seatId
-      ]);
+    if (scheduleId === null || !date) {
+      return;
     }
 
-    console.log('SELECTED SEATS:', this.selectedSeatIds());
+    const selection = this.bookingSelection();
+
+    const scheduleSelection = selection[scheduleId] ?? {};
+    const dateSelection = scheduleSelection[date] ?? {};
+    const coachSeats = dateSelection[coachId] ?? [];
+
+    let updatedSeats: number[];
+
+    if (coachSeats.includes(seatId)) {
+      updatedSeats = coachSeats.filter(
+        id => id !== seatId
+      );
+    } else {
+      updatedSeats = [
+        ...coachSeats,
+        seatId
+      ];
+    }
+
+    this.bookingSelection.set({
+      ...selection,
+
+      [scheduleId]: {
+        ...scheduleSelection,
+
+        [date]: {
+          ...dateSelection,
+          [coachId]: updatedSeats
+        }
+      }
+    });
+
+    console.log(
+      'BOOKING SELECTION:',
+      this.bookingSelection()
+    );
   }
 
   selectCoach(coachId: number): void {
     this.coachId.set(coachId);
 
-    this.selectedSeatIds.set([]);
+
 
     console.log('COACH ID:', this.coachId());
   }
 
 
   createBooking(): void {
-    const scheduleId = this.selectedScheduleId();
+    const selection = this.bookingSelection();
   
-    if (
-      scheduleId === null ||
-      !this.selectedDate() ||
-      this.selectedSeatIds().length === 0
-    ) {
+    if (this.selectedSeatsCount() === 0) {
       return;
     }
+  
     this.bookingError.set('');
   
-    const booking: CreateBooking = {
-      scheduleId: scheduleId,
-      seatId: this.selectedSeatIds(),
-      travelDate: new Date(this.selectedDate()).toISOString()
-    };
+    const bookings: CreateBooking[] = [];
   
-    console.log('BOOKING:', booking);
+    Object.entries(selection).forEach(
+      ([scheduleIdString, dates]) => {
+  
+        const scheduleId = Number(scheduleIdString);
+  
+        Object.entries(dates).forEach(
+          ([travelDate, coaches]) => {
+  
+            const seatIds = Object.values(coaches).flat();
+  
+            if (seatIds.length === 0) {
+              return;
+            }
+  
+            bookings.push({
+              scheduleId: scheduleId,
+              seatId: seatIds,
+              travelDate: new Date(travelDate).toISOString()
+            });
+  
+          }
+        );
+      }
+    );
+  
+    if (bookings.length === 0) {
+      return;
+    }
+  
+    console.log('BOOKINGS:', bookings);
+  
     this.bookingLoading.set(true);
-    this.trainService.createBooking(booking).subscribe({
-      next: (response) => {
-        console.log('BOOKING SUCCESS:', response);
+  
+    const requests = bookings.map(booking =>
+      this.trainService.createBooking(booking)
+    );
+  
+    forkJoin(requests).subscribe({
+  
+      next: (responses) => {
+        console.log('BOOKINGS SUCCESS:', responses);
+  
         this.bookingLoading.set(false);
         this.bookingSuccess.set(true);
       },
-    
+  
       error: (error) => {
-        console.log('BOOKING ERROR:', error);
-      
+        console.log('BOOKINGS ERROR:', error);
+  
         this.bookingLoading.set(false);
-        this.bookingError.set('Booking failed. Please try again.');
+  
+        this.bookingError.set(
+          'Booking failed. Please try again.'
+        );
       }
+  
     });
   }
 
   goToBookings(): void {
+    this.bookingSelection.set({});
+    this.selectedDatesBySchedule.set({});
+    this.bookingSuccess.set(false);
     this.router.navigate(['/profile'], {
       queryParams: {
         section: 'bookings'
       }
     });
   }
-  
+
   closeBookingSuccess(): void {
     this.bookingSuccess.set(false);
+    this.bookingSelection.set({});
+    this.selectedDatesBySchedule.set({});
+  }
+
+  onDateChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.selectDate(input.value);
   }
 }

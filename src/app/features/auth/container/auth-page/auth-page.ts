@@ -22,7 +22,12 @@ export class AuthPage {
   private router = inject(Router);
   public registerData = signal<RegisterRequest | null>(null);
   public showVerify = signal(false);
-  public authCompleted = signal(!!localStorage.getItem('accessToken'));
+  public authCompleted = signal(
+    !!(
+      localStorage.getItem('accessToken') ||
+      sessionStorage.getItem('accessToken')
+    )
+  );
   public showLogin = signal(true);
   public showForgotPassword = signal(false);
   public forgotPasswordSent = signal(false);
@@ -57,94 +62,103 @@ export class AuthPage {
 
     this.registerError.set('');
     this.registerData.set(data);
-  
+
     this.authService.register(data).subscribe({
-  
+
       next: (res) => {
         console.log('REGISTER RESPONSE:', res);
-  
+
         this.registerError.set('');
         this.showVerify.set(true);
       },
-  
+
       error: (err) => {
         console.log('REGISTER ERROR:', err);
-  
+
         if (err.error?.detail === 'Email is already registered.') {
-  
+
           this.registerError.set(
             'An account with this email already exists.'
           );
-  
+
         } else {
-  
+
           this.registerError.set(
             err.error?.detail ?? 'Registration failed. Please try again.'
           );
-  
+
         }
       }
-  
+
     });
   }
 
   verifyEmail(data: VerifyEmailRequest): void {
 
     this.verifyError.set('');
-  
+
     const request: VerifyEmailRequest = {
       email: this.registerData()?.email ?? '',
       code: data.code
     };
-  
+
     this.authService.verifyEmail(request).subscribe({
-  
+
       next: (res) => {
-  
+
         localStorage.setItem(
           'accessToken',
           res.data.accessToken
         );
-  
+
         localStorage.setItem(
           'refreshToken',
           res.data.refreshToken
         );
-  
+
         this.authService.isLoggedIn.set(true);
-        this.authCompleted.set(true);
-  
+        
+
         this.verifyError.set('');
-  
+        this.authCompleted.set(true);
+        this.router.navigate(['/trains']);
+
         console.log('TOKENS SAVED');
       },
-  
+
       error: (err) => {
-  
+
         console.log('VERIFY ERROR:', err);
-  
+
         this.verifyError.set(
           err.error?.detail ?? 'Invalid verification code. Please try again.'
         );
       }
-  
+
     });
   }
 
-  loginUser(data: LoginRequest): void {
-
+  loginUser(event: {
+    data: LoginRequest;
+    rememberMe: boolean;
+  }): void {
+  
     this.loginError.set('');
   
-    this.authService.login(data).subscribe({
+    this.authService.login(event.data).subscribe({
   
       next: (res) => {
   
-        localStorage.setItem(
+        const storage = event.rememberMe
+          ? localStorage
+          : sessionStorage;
+  
+        storage.setItem(
           'accessToken',
           res.data.accessToken
         );
   
-        localStorage.setItem(
+        storage.setItem(
           'refreshToken',
           res.data.refreshToken
         );
@@ -154,9 +168,12 @@ export class AuthPage {
         this.loginError.set('');
         this.loginSuccess.set(true);
   
-        console.log('LOGIN TOKENS SAVED');
-  
-        
+        console.log(
+          'LOGIN TOKENS SAVED:',
+          event.rememberMe
+            ? 'localStorage'
+            : 'sessionStorage'
+        );
       },
   
       error: (err) => {
@@ -176,14 +193,15 @@ export class AuthPage {
   }
 
   openLogin(): void {
+    this.authCompleted.set(false);
     this.showLogin.set(true);
     this.showForgotPassword.set(false);
+    this.showVerify.set(false);
   }
 
   logout(): void {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    this.authService.isLoggedIn.set(false);
+    this.authService.logout();
+  
     this.authCompleted.set(false);
     this.showLogin.set(true);
     this.showVerify.set(false);
@@ -243,7 +261,7 @@ export class AuthPage {
 
     this.loginSuccess.set(false);
     this.authCompleted.set(true);
-  
+
     if (this.returnUrl()) {
       this.router.navigateByUrl(this.returnUrl());
     } else {

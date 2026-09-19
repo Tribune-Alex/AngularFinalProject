@@ -19,4 +19,9 @@ export class ForgotPassword {
   goBack(): void {
     this.backToLogin.emit();
   }
+
+  onEmailInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.email.set(input.value);
+  }
 }

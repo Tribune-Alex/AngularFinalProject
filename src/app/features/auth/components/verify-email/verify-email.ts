@@ -32,4 +32,9 @@ export class VerifyEmail {
   resendCode(): void {
     this.resendRequested.emit();
   }
+
+  onCodeInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.code.set(input.value);
+  }
 }

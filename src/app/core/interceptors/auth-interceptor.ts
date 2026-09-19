@@ -3,12 +3,13 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { Authservice } from '../../features/auth/services/authservice';
+
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   const router = inject(Router);
   const authService = inject(Authservice);
 
-  const token = localStorage.getItem('accessToken');
+  const token = authService.getAccessToken();
 
   if (!token) {
     return next(req);
@@ -27,9 +28,12 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-      
+
+        sessionStorage.removeItem('accessToken');
+        sessionStorage.removeItem('refreshToken');
+
         authService.isLoggedIn.set(false);
-      
+
         router.navigate(['/auth']);
       }
 

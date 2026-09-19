@@ -27,6 +27,39 @@ export interface CreateBooking {
     createdAt: string;
   }
 
+  export interface BookingCoachGroup {
+    coachNumber: number;
+    coachClass: string;
+    seatIds: number[];
+    seatNumbers: string[];
+    price: number;
+  }
+
+  export interface BookingGroup {
+    bookingIds: number[];
+  
+    travelDate: string;
+    scheduleId: number;
+  
+    origin: string;
+    destination: string;
+    departureTime: string;
+  
+    totalPrice: number;
+  
+    seatIds: number[];
+    seatNumbers: string[];
+  
+    coachNumber: number;
+    coachClass: string;
+  
+    trainNumber: number;
+    trainName: string;
+  
+    createdAt: string;
+    coaches: BookingCoachGroup[];
+  }
+
   export interface BookingsResponse {
     data: {
       items: Booking[];

@@ -10,12 +10,16 @@ import { LoginRequest } from '../../models/authmodels';
 export class Login {
   public email = signal('');
   public password = signal('');
+  public showPassword = signal(false);
   public loginError = input<string>('');
   errorClosed = output<void>();
   public loginSuccess = input<boolean>(false);
   continueLogin = output<void>();
-
-  loginSubmit = output<LoginRequest>();
+  public rememberMe = signal(false);
+  loginSubmit = output<{
+    data: LoginRequest;
+    rememberMe: boolean;
+  }>();
   showRegister = output<void>();
   forgotPassword = output<string>();
 
@@ -24,8 +28,11 @@ export class Login {
       email: this.email(),
       password: this.password()
     };
-
-    this.loginSubmit.emit(data);
+  
+    this.loginSubmit.emit({
+      data: data,
+      rememberMe: this.rememberMe()
+    });
   }
 
   openRegister(): void {
@@ -42,5 +49,21 @@ export class Login {
 
   continueAfterLogin(): void {
     this.continueLogin.emit();
+  }
+
+  onEmailInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.email.set(input.value);
+  }
+
+  onPasswordInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.password.set(input.value);
+  }
+
+  onRememberMeChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+  
+    this.rememberMe.set(input.checked);
   }
 }

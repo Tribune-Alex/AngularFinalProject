@@ -52,4 +52,18 @@ export class TrainCardComponents {
   applyFilter(): void {
     this.applyFilterSelected.emit();
   }
+
+  onSearchInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.searchTrain(input.value);
+  }
+  onFromStationChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.selectFromStationName(select.value);
+  }
+
+  onToStationChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.selectToStationName(select.value);
+  }
 }

@@ -16,7 +16,7 @@
 
                 <label>TRAIN NUMBER</label>
 
-                <input type="text" placeholder="e.g. Express, 42" (input)="searchTrain($any($event.target).value)">
+                <input type="text" placeholder="e.g. Express, 42" (input)="onSearchInput($event)">
             </div>
 
             <div class="filter-box">
@@ -25,7 +25,7 @@
 
                 <label>FROM</label>
 
-                <select (change)="selectFromStationName($any($event.target).value)">
+                <select (change)="onFromStationChange($event)">
                     <option value="" [selected]="!fromStationName()">
                         Any origin
                     </option>
@@ -39,7 +39,7 @@
 
                 <label>TO</label>
 
-                <select (change)="selectToStationName($any($event.target).value)">
+                <select (change)="onToStationChange($event)">
                     <option value="" [selected]="!toStationName()">
                         Any destination
                     </option>

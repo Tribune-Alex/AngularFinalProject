@@ -11,7 +11,7 @@ export class Register {
   public registerSubmit = output<RegisterRequest>();
   public showLogin = output<void>();
   public passwordError = signal('');
-
+  public showPassword = signal(false);
   public firstName = signal('');
   public lastName = signal('');
   public email = signal('');
@@ -43,5 +43,24 @@ export class Register {
 
   openLogin(): void {
     this.showLogin.emit();
+  }
+
+  onFirstNameInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.firstName.set(input.value);
+  }
+
+  onLastNameInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.lastName.set(input.value);
+  }
+
+  onEmailInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.email.set(input.value);
+  }
+  onPasswordInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.password.set(input.value);
   }
 }

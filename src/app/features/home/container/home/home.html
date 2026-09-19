@@ -26,7 +26,7 @@
                   
                     <select
                       [value]="fromStation()"
-                      (change)="fromStation.set($any($event.target).value)"
+                      (change)="onFromStationChange($event)"
                     >
                       <option value="">
                         Origin city or station
@@ -49,7 +49,7 @@
                   
                     <select
                       [value]="toStation()"
-                      (change)="toStation.set($any($event.target).value)"
+                      (change)="onToStationChange($event)"
                     >
                       <option value="">
                         Destination city or station
@@ -157,9 +157,21 @@
                 Browse Trains
             </button>
 
-            <button class="account-button" (click)="goRegister()">
-                Create Account
-            </button>
+            @if (authService.isLoggedIn()) {
+                <button
+                  class="account-button"
+                  (click)="goProfile()"
+                >
+                  My Profile
+                </button>
+              } @else {
+                <button
+                  class="account-button"
+                  (click)="goRegister()"
+                >
+                  Get Started
+                </button>
+              }
 
         </div>
 

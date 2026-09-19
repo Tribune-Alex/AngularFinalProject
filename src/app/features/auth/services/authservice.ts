@@ -6,8 +6,29 @@ import { HttpClient } from '@angular/common/http';
 export class Authservice {
   private http = inject(HttpClient);
   public isLoggedIn = signal<boolean>(
-    !!localStorage.getItem('accessToken')
+    !!(
+      localStorage.getItem('accessToken') ||
+      sessionStorage.getItem('accessToken')
+    )
   );
+
+  getAccessToken(): string | null {
+    return (
+      localStorage.getItem('accessToken') ||
+      sessionStorage.getItem('accessToken')
+    );
+  }
+
+  logout(): void {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+  
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('refreshToken');
+  
+    this.isLoggedIn.set(false);
+  }
+  
   public registerUrl ='https://trainsapi.stepacademy.ge/api/auth/register';
   public verifyEmailUrl ='https://trainsapi.stepacademy.ge/api/auth/verify-email';
   public loginUrl ='https://trainsapi.stepacademy.ge/api/auth/login';

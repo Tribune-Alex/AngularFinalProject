@@ -415,6 +415,39 @@
   gap: 22px;
 }
 
+.booking-classes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.booking-classes .booking-class {
+  white-space: nowrap;
+}
+
+.details-coaches {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+
+  strong {
+    white-space: nowrap;
+  }
+}
+
+.details-seats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+
+  strong {
+    white-space: nowrap;
+  }
+}
+
 .booking-class {
   padding: 6px 11px;
 
@@ -835,6 +868,106 @@
   &:hover {
     transform: translateY(-1px);
     box-shadow: 0 7px 18px rgba(214, 180, 74, 0.18);
+  }
+}
+
+.change-date-error-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+}
+
+.change-date-error-modal {
+  width: 100%;
+  max-width: 430px;
+
+  padding: 32px;
+
+  text-align: center;
+
+  background: #121a2b;
+  border: 1px solid #24304a;
+  border-radius: 16px;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+
+  h2 {
+    margin: 16px 0 10px;
+
+    font-size: 24px;
+    font-weight: 700;
+
+    color: #ffffff;
+  }
+
+  p {
+    margin: 0;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    color: #aab4c8;
+  }
+}
+
+.change-date-error-icon {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto;
+
+  border-radius: 50%;
+
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+
+  color: #ef4444;
+
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.change-date-error-btn {
+  width: 100%;
+
+  margin-top: 24px;
+  padding: 12px 18px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #ef4444;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 }
 

@@ -17,6 +17,9 @@ export class Settings {
   public showDeleteConfirm = signal(false);
   private router = inject(Router);
   public authService = inject(Authservice);
+  public showCurrentPassword = signal(false);
+  public showNewPassword = signal(false);
+  public showConfirmPassword = signal(false);
 
   updateCurrentPassword(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -46,11 +49,7 @@ export class Settings {
   }
 
   logout(): void {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-
-    this.authService.isLoggedIn.set(false);
-
+    this.authService.logout();
     this.router.navigate(['/']);
   }
 
@@ -87,13 +86,18 @@ export class Settings {
     });
   }
 
+  passwordChangedLogout(): void {
+    this.authService.logout();
+  
+    this.passwordSuccess.set('');
+  
+    this.router.navigate(['/auth']);
+  }
+
   deleteAccount(): void {
     this.authService.deleteProfile().subscribe({
       next: () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-  
-        this.authService.isLoggedIn.set(false);
+        this.authService.logout();
   
         this.router.navigate(['/']);
       },

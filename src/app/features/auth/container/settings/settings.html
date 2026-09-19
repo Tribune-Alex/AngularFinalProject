@@ -44,31 +44,133 @@
 
             <div class="form-group">
                 <label>CURRENT PASSWORD</label>
-
-                <input type="password" [value]="currentPassword()" (input)="updateCurrentPassword($event)"
-                    placeholder="Enter current password">
-            </div>
+              
+                <div class="password-input-wrapper">
+              
+                  <input
+                    [type]="showCurrentPassword() ? 'text' : 'password'"
+                    [value]="currentPassword()"
+                    (input)="updateCurrentPassword($event)"
+                    placeholder="Enter current password"
+                  >
+              
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    (click)="showCurrentPassword.set(!showCurrentPassword())"
+                  >
+                    @if (showCurrentPassword()) {
+                        
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="20"
+                          height="20"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M3 3l18 18"></path>
+                          <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path>
+                          <path d="M9.9 4.2A10.7 10.7 0 0 1 12 4c5 0 9 4 10 8a12.5 12.5 0 0 1-2.1 4.1"></path>
+                          <path d="M6.6 6.6A12.4 12.4 0 0 0 2 12c1 4 5 8 10 8a10.8 10.8 0 0 0 5.4-1.4"></path>
+                        </svg>
+                      } @else {
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="20"
+                          height="20"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12"></path>
+                          <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                      }
+                  </button>
+              
+                </div>
+              </div>
 
             <div class="form-group">
                 <label>NEW PASSWORD</label>
 
-                <input type="password" [value]="newPassword()" (input)="updateNewPassword($event)"
-                    placeholder="Enter new password">
+                <div class="password-input-wrapper">
+                    <input
+                      [type]="showNewPassword() ? 'text' : 'password'"
+                      [value]="newPassword()"
+                      (input)="updateNewPassword($event)"
+                      placeholder="Enter new password"
+                    >
+                  
+                    <button
+                      type="button"
+                      class="password-toggle"
+                      (click)="showNewPassword.set(!showNewPassword())"
+                    >
+                      @if (showNewPassword()) {
+                        <svg viewBox="0 0 24 24" width="20" height="20"
+                          fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M3 3l18 18"></path>
+                          <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path>
+                          <path d="M9.9 4.2A10.7 10.7 0 0 1 12 4c5 0 9 4 10 8a12.5 12.5 0 0 1-2.1 4.1"></path>
+                          <path d="M6.6 6.6A12.4 12.4 0 0 0 2 12c1 4 5 8 10 8a10.8 10.8 0 0 0 5.4-1.4"></path>
+                        </svg>
+                      } @else {
+                        <svg viewBox="0 0 24 24" width="20" height="20"
+                          fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12"></path>
+                          <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                      }
+                    </button>
+                  </div>
             </div>
 
             <div class="form-group">
                 <label>CONFIRM NEW PASSWORD</label>
 
-                <input type="password" [value]="confirmPassword()" (input)="updateConfirmPassword($event)"
-                    placeholder="Confirm new password">
+                <div class="password-input-wrapper">
+                    <input
+                      [type]="showConfirmPassword() ? 'text' : 'password'"
+                      [value]="confirmPassword()"
+                      (input)="updateConfirmPassword($event)"
+                      placeholder="Confirm new password"
+                    >
+                  
+                    <button
+                      type="button"
+                      class="password-toggle"
+                      (click)="showConfirmPassword.set(!showConfirmPassword())"
+                    >
+                      @if (showConfirmPassword()) {
+                        <svg viewBox="0 0 24 24" width="20" height="20"
+                          fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M3 3l18 18"></path>
+                          <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path>
+                          <path d="M9.9 4.2A10.7 10.7 0 0 1 12 4c5 0 9 4 10 8a12.5 12.5 0 0 1-2.1 4.1"></path>
+                          <path d="M6.6 6.6A12.4 12.4 0 0 0 2 12c1 4 5 8 10 8a10.8 10.8 0 0 0 5.4-1.4"></path>
+                        </svg>
+                      } @else {
+                        <svg viewBox="0 0 24 24" width="20" height="20"
+                          fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12"></path>
+                          <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                      }
+                    </button>
+                  </div>
                 @if (passwordError()) {
                 <p class="password-error">
                     {{ passwordError() }}
-                </p>
-                }
-                @if (passwordSuccess()) {
-                <p class="password-success">
-                    {{ passwordSuccess() }}
                 </p>
                 }
             </div>
@@ -121,5 +223,35 @@
         </div>
 
     </section>
+
+    @if (passwordSuccess()) {
+
+        <div class="password-success-overlay">
+      
+          <div class="password-success-modal">
+      
+            <div class="password-success-icon">
+              ✓
+            </div>
+      
+            <h2>Password Changed!</h2>
+      
+            <p>
+              Your password has been changed successfully.
+              For security, please sign in again using your new password.
+            </p>
+      
+            <button
+              class="password-success-btn"
+              (click)="passwordChangedLogout()"
+            >
+              Sign In Again
+            </button>
+      
+          </div>
+      
+        </div>
+      
+      }
 
 </div>

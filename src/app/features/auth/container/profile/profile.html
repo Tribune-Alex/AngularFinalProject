@@ -113,10 +113,10 @@
             </p>
             }
             @if (updateError()) {
-                <p class="update-error">
-                  {{ updateError() }}
-                </p>
-              }
+            <p class="update-error">
+                {{ updateError() }}
+            </p>
+            }
 
             <button class="save-btn" (click)="saveProfile()">
                 Save Changes
@@ -171,11 +171,11 @@
 
 
         <!-- BOOKINGS -->
-        @if (displayedBookings(); as bookingList) {
+        @if (groupedBookings(); as bookingList) {
 
         <div class="bookings-list">
 
-            @for (booking of bookingList; track booking.id) {
+            @for (booking of bookingList; track booking.bookingIds[0]) {
 
             <div class="booking-card">
 
@@ -222,35 +222,57 @@
                 <!-- RIGHT SIDE -->
                 <div class="booking-details">
 
-                    <span class="booking-class">
-                        {{ booking.coachClass }}
-                    </span>
+                    <div class="booking-classes">
+                        @for (coach of booking.coaches; track coach.coachNumber) {
+                          <span class="booking-class">
+                            #{{ coach.coachNumber }} {{ coach.coachClass }}
+                          </span>
+                        }
+                      </div>
 
                     <div class="booking-seat">
-                        <span>SEAT</span>
-                        <strong>{{ booking.seatNumber }}</strong>
-                    </div>
+                        <span>SEATS</span>
+                      
+                        <strong>
+                          @for (coach of booking.coaches; track coach.coachNumber) {
+                            #{{ coach.coachNumber }}:
+                            {{ coach.seatNumbers.join(', ') }}
+                      
+                            @if (!$last) {
+                              ·
+                            }
+                          }
+                        </strong>
+                      </div>
 
                     <div class="booking-coach">
-                        <span>COACH</span>
-                        <strong>{{ booking.coachNumber }}</strong>
-                    </div>
+                        <span>COACHES</span>
+                      
+                        <strong>
+                          @for (coach of booking.coaches; track coach.coachNumber) {
+                            #{{ coach.coachNumber }}
+                            @if (!$last) {
+                              , 
+                            }
+                          }
+                        </strong>
+                      </div>
 
                     <div class="booking-price">
-                        <span>PRICE</span>
-                        <strong>${{ booking.price }}</strong>
+                        <span>TOTAL PRICE</span>
+                        <strong>${{ booking.totalPrice }}</strong>
                     </div>
 
-                    <button class="details-btn" (click)="openBookingDetails(booking.id)">
+                    <button class="details-btn" (click)="openBookingDetails(booking.bookingIds)">
                         Details
                     </button>
 
-                    <button class="delete-booking-btn" (click)="openDeleteBooking(booking.id)">
+                    <button class="delete-booking-btn" (click)="openDeleteBooking(booking.bookingIds[0])">
                         Delete
                     </button>
 
                 </div>
-                @if (bookingToDelete() === booking.id) {
+                @if (bookingToDelete() === booking.bookingIds[0]) {
 
                 <div class="delete-booking-confirm">
 
@@ -264,7 +286,7 @@
                             Cancel
                         </button>
 
-                        <button class="confirm-booking-delete" (click)="deleteBooking(booking.id)">
+                        <button class="confirm-booking-delete" (click)="deleteBookingGroup(booking.bookingIds)">
                             Yes, Delete
                         </button>
 
@@ -320,7 +342,11 @@
                 </div>
 
                 <strong class="details-total-price">
+                    @if (selectedBookingGroup(); as group) {
+                    ${{ group.totalPrice }}
+                    } @else {
                     ${{ details.price }}
+                    }
                 </strong>
 
             </div>
@@ -346,29 +372,62 @@
                 </div>
 
                 <div class="details-info-row">
-                    <span>Coach</span>
-
-                    <strong>
-                        {{ details.coachNumber }}
-                        — {{ details.coachClass }}
-                    </strong>
+                    <span>Coaches</span>
+                
+                    <div class="details-coaches">
+                        @if (selectedBookingGroup(); as group) {
+                
+                            @for (coach of group.coaches; track coach.coachNumber) {
+                                <strong>
+                                    #{{ coach.coachNumber }} — {{ coach.coachClass }}
+                                </strong>
+                            }
+                
+                        } @else {
+                
+                            <strong>
+                                #{{ details.coachNumber }} — {{ details.coachClass }}
+                            </strong>
+                
+                        }
+                    </div>
                 </div>
 
                 <div class="details-info-row">
-                    <span>Ticket Price</span>
+                    <span>Total Price</span>
 
                     <strong>
+                        @if (selectedBookingGroup(); as group) {
+                        ${{ group.totalPrice }}
+                        } @else {
                         ${{ details.price }}
+                        }
                     </strong>
                 </div>
 
                 <div class="details-info-row">
-                    <span>Seat</span>
-
-                    <strong>
-                        {{ details.seatNumber }}
-                    </strong>
-                </div>
+                    <span>Seats</span>
+                  
+                    <div class="details-seats">
+                      @if (selectedBookingGroup(); as group) {
+                  
+                        @for (coach of group.coaches; track coach.coachNumber) {
+                          <strong>
+                            #{{ coach.coachNumber }}:
+                            {{ coach.seatNumbers.join(', ') }}
+                          </strong>
+                        }
+                  
+                      } @else {
+                  
+                        <strong>
+                          #{{ details.coachNumber }}:
+                          {{ details.seatNumber }}
+                        </strong>
+                  
+                      }
+                    </div>
+                  </div>
 
                 <div class="details-info-row">
                     <span>Travel Date</span>
@@ -422,40 +481,34 @@
                     Change Date
                 </button>
 
-                <button class="delete-details-btn" (click)="openDeleteBooking(details.id)">
+                <button class="delete-details-btn" (click)="openDeleteBooking(selectedBookingIds()[0])">
                     Delete Booking
                 </button>
 
             </div>
             @if (bookingToDelete() === details.id) {
 
-                <div class="details-delete-confirm">
-            
-                    <p>
-                        Are you sure you want to delete this booking?
-                        This action cannot be undone.
-                    </p>
-            
-                    <div class="details-delete-actions">
-            
-                        <button
-                            class="cancel-booking-delete"
-                            (click)="cancelDeleteBooking()"
-                        >
-                            Cancel
-                        </button>
-            
-                        <button
-                            class="confirm-booking-delete"
-                            (click)="deleteBooking(details.id)"
-                        >
-                            Yes, Delete Booking
-                        </button>
-            
-                    </div>
-            
+            <div class="details-delete-confirm">
+
+                <p>
+                    Are you sure you want to delete this booking?
+                    This action cannot be undone.
+                </p>
+
+                <div class="details-delete-actions">
+
+                    <button class="cancel-booking-delete" (click)="cancelDeleteBooking()">
+                        Cancel
+                    </button>
+
+                    <button class="confirm-booking-delete" (click)="deleteBookingGroup(selectedBookingIds())">
+                        Yes, Delete Booking
+                    </button>
+
                 </div>
-            
+
+            </div>
+
             }
 
         </div>
@@ -464,6 +517,37 @@
     </section>
 
     }
+
+    @if (changeDateError()) {
+
+        <div class="change-date-error-overlay">
+      
+          <div class="change-date-error-modal">
+      
+            <div class="change-date-error-icon">
+              !
+            </div>
+      
+            <h2>
+              Seat Unavailable
+            </h2>
+      
+            <p>
+              {{ changeDateError() }}
+            </p>
+      
+            <button
+              class="change-date-error-btn"
+              (click)="closeChangeDateError()"
+            >
+              Choose Another Date
+            </button>
+      
+          </div>
+      
+        </div>
+      
+      }
 </div>
 
 }

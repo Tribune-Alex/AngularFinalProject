@@ -13,9 +13,29 @@
 <app-forgot-password (forgotSubmit)="forgetPassword($event)" (backToLogin)="openLogin()"></app-forgot-password>
 
 @if (forgotPasswordSent()) {
-<p class="success-message">
-  Reset link has been sent to your email.
-</p>
+
+  <div class="reset-success-overlay">
+
+    <div class="reset-success-modal">
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+      <h2>Check Your Email</h2>
+
+      <p>
+        A password reset link has been sent to your email.
+      </p>
+
+      <button type="button" (click)="openLogin()">
+        Back to Login
+      </button>
+
+    </div>
+
+  </div>
+
 }
 
 @if (forgotPasswordError()) {

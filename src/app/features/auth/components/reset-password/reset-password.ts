@@ -22,4 +22,9 @@ export class ResetPassword {
 
     this.resetSubmit.emit(data);
   }
+
+  onPasswordInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.password.set(input.value);
+  }
 }
