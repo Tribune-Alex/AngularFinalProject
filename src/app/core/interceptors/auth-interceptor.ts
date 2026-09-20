@@ -11,6 +11,14 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   const token = authService.getAccessToken();
 
+  const isN8nRequest = req.url.startsWith(
+    'http://localhost:5678/'
+  );
+  
+  if (isN8nRequest) {
+    return next(req);
+  }
+
   if (!token) {
     return next(req);
   }

@@ -186,4 +186,11 @@ export class Trainservice {
           data
         );
       }
+
+      sendBookingConfirmation(data: FormData) {
+        return this.http.post(
+          'http://localhost:5678/webhook/train-booking-confirmation',
+          data
+        );
+      }
 }
