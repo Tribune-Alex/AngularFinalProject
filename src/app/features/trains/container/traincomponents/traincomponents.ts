@@ -3,9 +3,12 @@ import { Trainservice } from '../../services/trainservice';
 import { TrainCardComponents } from '../../components/train-card-components/train-card-components';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AiChat } from '../../components/ai-chat/ai-chat';
+import { Authservice } from '../../../auth/services/authservice';
+
 
 @Component({
-  imports: [TrainCardComponents],
+  imports: [TrainCardComponents,AiChat],
   selector: 'app-traincomponents',
   styleUrl: './traincomponents.scss',
   templateUrl: './traincomponents.html',
@@ -16,7 +19,7 @@ export class Traincomponents {
   private router=inject(Router)
   public stations = this.trainService.stations;
   public toStations = this.trainService.toStations;
-  // public selectedTrainId = signal<number>(1);
+  public authService = inject(Authservice);
   public query = signal<string | undefined>(undefined);
   public fromStationId = signal<number | null>(null);
   public fromStationName = signal<string>('');

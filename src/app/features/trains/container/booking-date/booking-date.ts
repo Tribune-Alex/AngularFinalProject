@@ -19,6 +19,7 @@ export class BookingDate {
   private route = inject(ActivatedRoute);
   private trainService = inject(Trainservice);
   private authService = inject(Authservice);
+  public today = new Date().toISOString().split('T')[0];
   public selectedDate = signal<string>('');
   public selectedScheduleId = signal<number | null>(Number(this.route.snapshot.queryParamMap.get('scheduleId')) || null);
   public selectedDatesBySchedule = signal<Record<number, string>>({});

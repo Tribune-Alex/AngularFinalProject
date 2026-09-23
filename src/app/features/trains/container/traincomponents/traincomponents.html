@@ -53,3 +53,7 @@
   (scheduleSearch)="searchSchedule($event)"
 ></app-train-card-components>
 }
+
+@if (authService.isLoggedIn()) {
+  <app-ai-chat></app-ai-chat>
+}

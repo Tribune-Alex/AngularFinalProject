@@ -1,0 +1,183 @@
+<div class="ai-chat" [class.minimized]="isMinimized()">
+
+  
+  <div class="ai-header">
+
+    <div class="ai-avatar">
+      ✦
+    </div>
+
+    <div class="ai-header-info">
+
+      <h3>
+        STEP AI Assistant
+      </h3>
+
+      <div class="ai-status">
+
+        <span class="status-dot"></span>
+
+        <span>
+          Online · Train booking assistant
+        </span>
+
+      </div>
+
+    </div>
+
+    
+    <button class="minimize-btn" type="button" (click)="toggleChat()"
+      [attr.aria-label]="isMinimized() ? 'Open AI chat' : 'Minimize AI chat'">
+      {{ isMinimized() ? '+' : '—' }}
+    </button>
+
+  </div>
+
+
+  
+  @if (!isMinimized()) {
+
+  
+  <div class="chat-messages" #chatMessages>
+
+
+    
+    <div class="welcome-message">
+
+      <div class="message-avatar">
+        ✦
+      </div>
+
+      <div class="message-content">
+
+        <span class="message-author">
+          STEP AI
+        </span>
+
+        <p>
+          Hi! I can help you find a train and book your ticket.
+          Where would you like to travel?
+        </p>
+
+      </div>
+
+    </div>
+
+
+    
+    @for (item of conversationHistory(); track $index) {
+
+    
+    @if (item.startsWith('User: ')) {
+
+    <div class="user-message">
+
+      <div class="user-message-content">
+
+        <span class="message-author">
+          You
+        </span>
+
+        <p>
+          {{ item.replace('User: ', '') }}
+        </p>
+
+      </div>
+
+    </div>
+
+    }
+
+
+    
+    @else if (item.startsWith('AI: ')) {
+
+    <div class="ai-response">
+
+      <div class="message-avatar">
+        ✦
+      </div>
+
+      <div class="message-content">
+
+        <span class="message-author">
+          STEP AI
+        </span>
+
+        <p>
+          {{ item.replace('AI: ', '') }}
+        </p>
+
+      </div>
+
+    </div>
+
+    }
+
+    }
+
+
+    
+    @if (loading()) {
+
+    <div class="ai-thinking">
+
+      <div class="message-avatar">
+        ✦
+      </div>
+
+      <div class="thinking-bubble">
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </div>
+
+    </div>
+
+    }
+
+
+    
+    @if (error()) {
+
+    <div class="chat-error">
+
+      <span>
+        !
+      </span>
+
+      <div>
+
+        <strong>
+          Something went wrong
+        </strong>
+
+        <p>
+          {{ error() }}
+        </p>
+
+      </div>
+
+    </div>
+
+    }
+
+  </div>
+
+
+ 
+  <div class="chat-input-area">
+
+    <input type="text" placeholder="Ask STEP AI..." [value]="message()" (input)="onMessageInput($event)" (keyup.enter)="onEnter($event)">
+
+    <button type="button" [disabled]="!message().trim() || loading()" (click)="sendMessage()" >
+      Send
+    </button>
+
+  </div>
+
+  }
+
+</div>
