@@ -1,6 +1,7 @@
 import { Component, inject} from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Authservice } from '../../../features/auth/services/authservice';
+import { ThemeService } from '../../../core/services/theme.service';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { Authservice } from '../../../features/auth/services/authservice';
 export class Navbar {
   private router = inject(Router);
   public authService = inject(Authservice);
+  public themeService = inject(ThemeService);
   public isHome(): boolean {
     return this.router.url === '/';
   }

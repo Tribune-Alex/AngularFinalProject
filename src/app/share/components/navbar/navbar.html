@@ -6,15 +6,15 @@
         <span class="train-icon">
             🚆
         </span>
-    
+
         <span class="step">
             STEP
         </span>
-    
+
         <span class="trains">
             TRAINS
         </span>
-    
+
     </a>
 
 
@@ -34,6 +34,15 @@
 
     <!-- RIGHT: AUTH -->
     <div class="navbar-auth">
+        <button class="theme-toggle" (click)="themeService.toggleTheme()" type="button">
+
+            @if (themeService.isLightMode()) {
+            🌙
+            } @else {
+            ☀️
+            }
+
+        </button>
 
         @if (!authService.isLoggedIn()) {
 
@@ -49,9 +58,9 @@
 
         @if (authService.isLoggedIn()) {
 
-            <button class="sign-in" (click)="goProfile()">
-                My Profile
-            </button>
+        <button class="sign-in" (click)="goProfile()">
+            My Profile
+        </button>
 
         }
 

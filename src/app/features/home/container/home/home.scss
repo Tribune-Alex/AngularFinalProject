@@ -10,8 +10,8 @@
 .home-page {
   min-height: 100vh;
 
-  background: #0b1124;
-  color: #ffffff;
+  background: var(--page-bg);
+  color: var(--page-text);
 }
 
 
@@ -31,12 +31,10 @@
   box-sizing: border-box;
 
   background:
-    radial-gradient(
-      circle at center,
+    radial-gradient(circle at center,
       rgba(255, 255, 255, 0.025) 1px,
-      transparent 1px
-    ),
-    #0b1124;
+      transparent 1px),
+    var(--page-bg);
 
   background-size: 46px 46px;
 }
@@ -78,7 +76,7 @@
 .hero h1 {
   margin: 0;
 
-  color: #f6edcf;
+  color: var(--page-text);
 
   font-size: 72px;
   font-weight: 800;
@@ -115,10 +113,7 @@
   display: grid;
 
   grid-template-columns:
-    minmax(0, 1fr)
-    auto
-    minmax(0, 1fr)
-    auto;
+    minmax(0, 1fr) auto minmax(0, 1fr) auto;
 
   align-items: center;
 
@@ -126,9 +121,8 @@
 
   box-sizing: border-box;
 
-  background: #11192c;
-
-  border: 1px solid #34405c;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 16px;
 
   box-shadow:
@@ -195,16 +189,12 @@
   -webkit-appearance: none;
 
   background-image:
-    linear-gradient(
-      45deg,
+    linear-gradient(45deg,
       transparent 50%,
-      #d6ad48 50%
-    ),
-    linear-gradient(
-      135deg,
+      #d6ad48 50%),
+    linear-gradient(135deg,
       #d6ad48 50%,
-      transparent 50%
-    );
+      transparent 50%);
 
   background-position:
     calc(100% - 10px) 50%,
@@ -218,9 +208,8 @@
 }
 
 .search-field select option {
-  background: #111a2f;
-
-  color: #f5e6b4;
+  background: var(--option-bg);
+  color: var(--option-text);
 
   font-size: 14px;
 }
@@ -230,7 +219,7 @@
 }
 
 .search-field select:focus {
-  color: #f5e6b4;
+  color: var(--card-text);
 }
 
 .search-field:hover .label {
@@ -306,9 +295,8 @@
 
   box-sizing: border-box;
 
-  background: #11192c;
-
-  border: 1px solid #24314d;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 16px;
 
   transition:
@@ -363,7 +351,7 @@
 .advantage-card h3 {
   margin: 0 0 10px;
 
-  color: #f6edcf;
+  color: var(--card-text);
 
   font-size: 15px;
 }
@@ -371,7 +359,7 @@
 .advantage-card p {
   margin: 0;
 
-  color: #a68e59;
+  color: var(--muted-text);
 
   font-size: 13px;
   line-height: 1.65;
@@ -393,7 +381,7 @@
 
   text-align: center;
 
-  background: #11192c;
+  background: var(--card-bg);
 
   border: 1px solid rgba(214, 173, 72, 0.25);
   border-radius: 20px;
@@ -402,7 +390,7 @@
 .cta h2 {
   margin: 0;
 
-  color: #f6edcf;
+  color: var(--card-text);
 
   font-size: 30px;
   font-weight: 800;
@@ -474,7 +462,7 @@
 .account-button {
   background: transparent;
 
-  border: 1px solid #34405c;
+  border: 1px solid var(--card-border);
 
   color: #d1b66d;
 }
@@ -495,9 +483,9 @@ footer {
   justify-content: center;
   align-items: center;
 
-  background: #080d19;
+  background: var(--footer-bg);
 
-  border-top: 1px solid #24314d;
+  border-top: 1px solid var(--card-border);
 
   color: #f2d994;
 

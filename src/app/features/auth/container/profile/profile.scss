@@ -1070,3 +1070,584 @@
       justify-content: flex-end;
     }
   }
+
+  /* =========================================================
+   LIGHT / DARK THEME OVERRIDES
+   STEP TRAINS PROFILE
+   ========================================================= */
+
+
+/* =========================
+   PROFILE PAGE
+========================= */
+
+.profile-page {
+  background: var(--page-bg);
+  color: var(--page-text);
+}
+
+
+/* =========================
+   MAIN CARDS
+========================= */
+
+.profile-sidebar,
+.profile-content {
+  background: var(--card-bg);
+  border-color: var(--card-border);
+}
+
+
+/* =========================
+   PROFILE SIDEBAR
+========================= */
+
+.profile-sidebar h2 {
+  color: var(--heading-color);
+}
+
+.email {
+  color: var(--muted-text);
+}
+
+.sidebar-divider {
+  background: var(--card-border);
+}
+
+.sidebar-item {
+  color: var(--muted-text);
+}
+
+.sidebar-item:hover {
+  background: var(--input-bg);
+  color: #d7b54a;
+}
+
+.sidebar-item.active {
+  background: var(--input-bg);
+  color: #d7b54a;
+}
+
+
+/* Sign Out intentionally stays red */
+
+.sign-out {
+  color: #ff6464;
+}
+
+.sign-out:hover {
+  background: rgba(255, 100, 100, 0.08);
+}
+
+
+/* =========================
+   PROFILE CONTENT
+========================= */
+
+.profile-content h1 {
+  color: var(--heading-color);
+}
+
+.subtitle {
+  color: var(--muted-text);
+}
+
+
+/* =========================
+   PROFILE FORM
+========================= */
+
+.form-group label {
+  color: #c7a952;
+}
+
+.form-group input {
+  background: var(--input-bg);
+  color: var(--input-text);
+  border-color: var(--input-border);
+}
+
+.form-group input::placeholder {
+  color: var(--muted-text);
+}
+
+.form-group input:focus {
+  border-color: #d2ad45;
+
+  box-shadow:
+    0 0 0 2px rgba(210, 173, 69, 0.12);
+}
+
+
+/* =========================
+   PROFILE MESSAGES
+========================= */
+
+.success-message {
+  color: #45c995;
+}
+
+.update-error {
+  color: #ff6464;
+}
+
+
+/* =========================
+   SAVE BUTTON
+========================= */
+
+.save-btn {
+  background: #d6b44a;
+  color: #111827;
+}
+
+
+/* =========================================================
+   MY BOOKINGS FILTER
+   ========================================================= */
+
+.booking-filter {
+  background: var(--input-bg);
+  border-color: var(--card-border);
+}
+
+.booking-filter-field {
+  label {
+    color: #c7a952;
+  }
+
+  input {
+    background: var(--input-bg);
+    color: var(--input-text);
+
+    border-color: var(--input-border);
+
+    color-scheme: normal;
+
+    &:focus {
+      border-color: #d2ad45;
+
+      box-shadow:
+        0 0 0 2px rgba(210, 173, 69, 0.12);
+    }
+  }
+}
+
+
+/* =========================
+   FILTER BUTTONS
+========================= */
+
+.filter-btn {
+  background: #d6b44a;
+  color: #111827;
+}
+
+.clear-btn {
+  color: var(--muted-text);
+
+  &:hover {
+    color: #d7b54a;
+  }
+}
+
+
+/* =========================================================
+   MY BOOKINGS CARDS
+   ========================================================= */
+
+.booking-card {
+  background: var(--input-bg);
+  border-color: var(--card-border);
+}
+
+.booking-card:hover {
+  border-color: #d6b44a;
+}
+
+
+/* =========================
+   BOOKING ROUTE
+========================= */
+
+.booking-route {
+  color: var(--card-text);
+}
+
+.route-arrow {
+  color: #d6b44a;
+}
+
+.booking-trip-info {
+  color: var(--muted-text);
+}
+
+.dot {
+  color: var(--muted-text);
+}
+
+
+/* =========================
+   BOOKING CLASS
+========================= */
+
+.booking-class {
+  border-color: rgba(214, 180, 74, 0.4);
+
+  background: rgba(214, 180, 74, 0.08);
+
+  color: #d6b44a;
+}
+
+
+/* =========================
+   BOOKING SEAT / COACH / PRICE
+========================= */
+
+.booking-seat span,
+.booking-coach span,
+.booking-price span {
+  color: var(--muted-text);
+}
+
+.booking-seat strong,
+.booking-coach strong {
+  color: var(--card-text);
+}
+
+.booking-price strong {
+  color: #d6b44a;
+}
+
+
+/* =========================
+   DETAILS BUTTON
+========================= */
+
+.details-btn {
+  border-color: #d6b44a;
+
+  background: transparent;
+
+  color: #d6b44a;
+
+  &:hover {
+    background: rgba(214, 180, 74, 0.1);
+  }
+}
+
+
+/* =========================
+   DELETE BOOKING
+========================= */
+
+.delete-booking-btn {
+  border-color: rgba(255, 100, 100, 0.35);
+
+  background: transparent;
+
+  color: #ff6464;
+
+  &:hover {
+    background: rgba(255, 100, 100, 0.08);
+
+    border-color: #ff6464;
+  }
+}
+
+
+/* =========================
+   DELETE CONFIRM
+========================= */
+
+.delete-booking-confirm {
+  border-top-color: var(--card-border);
+
+  p {
+    color: var(--muted-text);
+  }
+}
+
+.cancel-booking-delete {
+  border-color: var(--card-border);
+
+  background: transparent;
+
+  color: var(--muted-text);
+
+  &:hover {
+    border-color: var(--input-border);
+
+    color: var(--card-text);
+  }
+}
+
+.confirm-booking-delete {
+  border-color: rgba(255, 100, 100, 0.4);
+
+  background: rgba(255, 100, 100, 0.08);
+
+  color: #ff6464;
+
+  &:hover {
+    border-color: #ff6464;
+
+    background: rgba(255, 100, 100, 0.14);
+  }
+}
+
+
+/* =========================================================
+   BOOKING DETAILS PAGE
+   ========================================================= */
+
+.booking-details-page {
+  color: var(--page-text);
+}
+
+
+/* =========================
+   BACK BUTTON
+========================= */
+
+.back-bookings-btn {
+  color: var(--muted-text);
+
+  &:hover {
+    color: #d6b44a;
+  }
+}
+
+
+/* =========================
+   TRAIN IMAGE
+========================= */
+
+.details-image {
+  background: var(--input-bg);
+
+  border-color: var(--card-border);
+}
+
+
+/* =========================
+   DETAILS ROUTE
+========================= */
+
+.details-route-row {
+  border-bottom-color: var(--card-border);
+}
+
+.details-route {
+  h2 {
+    color: var(--heading-color);
+  }
+}
+
+.details-arrow {
+  color: #d6b44a;
+}
+
+.details-total-price {
+  color: #d6b44a;
+}
+
+
+/* =========================
+   DETAILS INFORMATION
+========================= */
+
+.details-info-row {
+  border-bottom-color: var(--card-border);
+
+  > span {
+    color: var(--muted-text);
+  }
+
+  > strong {
+    color: var(--card-text);
+  }
+}
+
+
+/* =========================
+   DETAILS ACTIONS
+========================= */
+
+.change-date-btn {
+  background: #d6b44a;
+
+  color: #111827;
+}
+
+.delete-details-btn {
+  border-color: rgba(255, 100, 100, 0.4);
+
+  background: transparent;
+
+  color: #ff6464;
+
+  &:hover {
+    border-color: #ff6464;
+
+    background: rgba(255, 100, 100, 0.07);
+  }
+}
+
+
+/* =========================================================
+   CHANGE BOOKING DATE
+   ========================================================= */
+
+.change-date-panel {
+  background: var(--input-bg);
+
+  border-color: var(--input-border);
+}
+
+.change-date-field {
+  label {
+    color: #c7a952;
+  }
+
+  input {
+    border-color: var(--input-border);
+
+    background: var(--card-bg);
+
+    color: var(--input-text);
+
+    color-scheme: normal;
+
+    &:focus {
+      border-color: #d2ad45;
+
+      box-shadow:
+        0 0 0 2px rgba(210, 173, 69, 0.12);
+    }
+  }
+}
+
+
+/* =========================
+   CHANGE DATE BUTTONS
+========================= */
+
+.cancel-date-btn {
+  border-color: var(--card-border);
+
+  background: transparent;
+
+  color: var(--muted-text);
+
+  &:hover {
+    color: var(--card-text);
+
+    border-color: var(--input-border);
+  }
+}
+
+.save-date-btn {
+  background: #d6b44a;
+
+  color: #111827;
+}
+
+
+/* =========================================================
+   CHANGE DATE ERROR MODAL
+   ========================================================= */
+
+.change-date-error-overlay {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.change-date-error-modal {
+  background: var(--card-bg);
+
+  border-color: var(--card-border);
+
+  h2 {
+    color: var(--heading-color);
+  }
+
+  p {
+    color: var(--muted-text);
+  }
+}
+
+.change-date-error-icon {
+  background: rgba(239, 68, 68, 0.12);
+
+  border-color: rgba(239, 68, 68, 0.35);
+
+  color: #ef4444;
+}
+
+.change-date-error-btn {
+  background: #ef4444;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   DETAILS DELETE CONFIRM
+   ========================================================= */
+
+.details-delete-confirm {
+  background: rgba(255, 100, 100, 0.04);
+
+  border-color: rgba(255, 100, 100, 0.2);
+
+  p {
+    color: var(--muted-text);
+  }
+}
+
+
+/* =========================================================
+   LIGHT THEME SPECIFIC FIXES
+   ========================================================= */
+
+:host-context(body.light-theme) {
+
+  /* Native date picker icon */
+  .booking-filter-field input,
+  .change-date-field input {
+    color-scheme: light;
+  }
+
+
+  /* Cards need a little separation on white background */
+  .profile-sidebar,
+  .profile-content {
+    box-shadow:
+      0 8px 30px rgba(24, 32, 51, 0.05);
+  }
+
+
+  .booking-card {
+    box-shadow:
+      0 4px 14px rgba(24, 32, 51, 0.04);
+  }
+
+
+  /* Delete areas stay very subtle */
+  .details-delete-confirm {
+    background: rgba(255, 100, 100, 0.035);
+  }
+}
+
+
+/* =========================================================
+   DARK THEME SPECIFIC FIXES
+   ========================================================= */
+
+:host-context(body:not(.light-theme)) {
+
+  .booking-filter-field input,
+  .change-date-field input {
+    color-scheme: dark;
+  }
+}

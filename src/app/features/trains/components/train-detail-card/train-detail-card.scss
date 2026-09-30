@@ -5,8 +5,8 @@
   padding-top: 50px;
   box-sizing: border-box;
 
-  background-color: #0b1124;
-  color: #f5edcf;
+  background-color: var(--page-bg);
+  color: var(--page-text);
 }
 
 
@@ -162,21 +162,16 @@
   display: grid;
 
   grid-template-columns:
-    1.5fr
-    auto
-    1.5fr
-    1fr
-    auto;
+    1.5fr auto 1.5fr 1fr auto;
 
   align-items: center;
 
   gap: 25px;
 
   padding: 28px 30px;
-
-  background: #151d33;
-
-  border: 1px solid #26304a;
+  color: var(--card-text);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 18px;
 }
 
@@ -316,10 +311,7 @@
   display: grid;
 
   grid-template-columns:
-    minmax(180px, 1fr)
-    minmax(180px, 1fr)
-    minmax(120px, 180px)
-    minmax(90px, 120px);
+    minmax(180px, 1fr) minmax(180px, 1fr) minmax(120px, 180px) minmax(90px, 120px);
 
   align-items: center;
 
@@ -327,9 +319,10 @@
 
   padding: 0 38px;
 
-  background: #141c2f;
+  background: var(--card-bg);
 
-  border: 1px solid #26324d;
+  border: 1px solid var(--card-border);
+
   border-radius: 18px;
 
   transition: 0.2s ease;
@@ -362,7 +355,7 @@
     font-size: 16px;
     font-weight: 600;
 
-    color: #f4edda;
+    color: var(--card-text);
   }
 
   div:last-child {
@@ -432,13 +425,12 @@
 
   button {
     padding: 8px 18px;
-
-    border: 1px solid #293550;
     border-radius: 20px;
+    border: 1px solid var(--filter-border);
 
-    background: #141c2f;
+    background: var(--filter-bg);
 
-    color: #8f8a7f;
+    color: var(--filter-text);
 
     font-size: 13px;
     font-weight: 600;
@@ -519,12 +511,10 @@
 ========================= */
 
 .skeleton-animation {
-  background: linear-gradient(
-    90deg,
-    #182137 25%,
-    #2a354f 50%,
-    #182137 75%
-  );
+  background: linear-gradient(90deg,
+      #182137 25%,
+      #2a354f 50%,
+      #182137 75%);
 
   background-size: 200% 100%;
 
