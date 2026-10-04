@@ -1,13 +1,15 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output,inject, signal } from '@angular/core';
 import { Schedule, Station, Train, TrainDetails } from '../../models/trainmodels';
+import { TranslatePipe,TranslateService } from '@ngx-translate/core';
 
 @Component({
-  imports: [],
+  imports: [TranslatePipe],
   selector: 'app-train-card-components',
   styleUrl: './train-card-components.scss',
   templateUrl: './train-card-components.html',
 })
 export class TrainCardComponents {
+  private translate = inject(TranslateService);
   trains = input<Train[]>([])
   stations = input<Station[]>([]);
   toStations = input<Station[]>([]);
@@ -23,6 +25,7 @@ export class TrainCardComponents {
   applyFilterSelected = output<void>();
   scheduleSearch = output<string>();
   scheduleResults = input<Schedule[]>([]);
+  currentLanguage = signal<string>('en');
   selectTrain(id: number): void {
     this.transSelected.emit(id)
   }
@@ -66,4 +69,11 @@ export class TrainCardComponents {
     const select = event.target as HTMLSelectElement;
     this.selectToStationName(select.value);
   }
+
+  changeLanguage(lang: string): void {
+    this.currentLanguage.set(lang);
+    this.translate.use(lang);
+  }
+
+  
 }

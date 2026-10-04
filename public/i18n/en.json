@@ -1,0 +1,21 @@
+{
+    "TRAINS": {
+        "EYEBROW": "EXPLORE",
+        "TITLE": "Train Routes",
+        "DESCRIPTION": "Find trains by number and view detailed route information.",
+        "SEARCH": "SEARCH",
+        "TRAIN_NUMBER": "TRAIN NUMBER",
+        "TRAIN_PLACEHOLDER": "e.g. Express, 42",
+        "FILTER_BY_ROUTE": "FILTER BY ROUTE",
+        "FROM": "FROM",
+        "TO": "TO",
+        "ANY_ORIGIN": "Any origin",
+        "ANY_DESTINATION": "Any destination",
+        "APPLY_FILTER": "Apply Filter",
+        "SCHEDULE_SEARCH": "Search schedules...",
+        "COACHES": "coaches",
+        "SEATS": "seats",
+        "DETAILS": "Detailed information",
+        "SELECTED_TRAIN": "SELECTED TRAIN"
+    }
+}

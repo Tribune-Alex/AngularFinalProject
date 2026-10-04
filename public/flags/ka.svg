@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+<rect width="900" height="600" fill="#fff"/>
+<path fill="#ff0000" d="M390 0h120v600H390zM0 240h900v120H0z"/>
+<g fill="#ff0000">
+<path d="M170 70h40v60h60v40h-60v60h-40v-60h-60v-40h60z"/>
+<path d="M690 70h40v60h60v40h-60v60h-40v-60h-60v-40h60z"/>
+<path d="M170 370h40v60h60v40h-60v60h-40v-60h-60v-40h60z"/>
+<path d="M690 370h40v60h60v40h-60v60h-40v-60h-60v-40h60z"/>
+</g>
+</svg>

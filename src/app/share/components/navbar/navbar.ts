@@ -1,4 +1,4 @@
-import { Component, inject} from '@angular/core';
+import { Component, inject, signal} from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Authservice } from '../../../features/auth/services/authservice';
 import { ThemeService } from '../../../core/services/theme.service';
@@ -14,6 +14,12 @@ export class Navbar {
   private router = inject(Router);
   public authService = inject(Authservice);
   public themeService = inject(ThemeService);
+  public menuOpen = signal(false);
+
+  toggleMenu(): void {
+    this.menuOpen.update(value => !value);
+  }
+
   public isHome(): boolean {
     return this.router.url === '/';
   }

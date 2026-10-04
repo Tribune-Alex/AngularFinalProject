@@ -260,6 +260,24 @@ a {
   }
 }
 
+.menu-toggle {
+  display: none;
+  margin-left: auto;
+
+  background: transparent;
+  border: none;
+
+  color: #d6ad48;
+
+  font-size: 28px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.mobile-menu {
+  display: none;
+}
 
 /* =========================
    RESPONSIVE
@@ -271,19 +289,18 @@ a {
     padding: 0 20px;
   }
 
+  .navbar-auth {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
   .navbar-links {
     display: none;
   }
 
-  .navbar-auth {
-    margin-left: auto;
-
-    gap: 10px;
-  }
-
-  .get-started {
-    display: none;
-  }
 
   .step,
   .trains {
@@ -292,5 +309,80 @@ a {
 
   .train-icon {
     font-size: 23px;
+  }
+
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 15px 20px 20px;
+
+    background: #0b1124;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+    a {
+      padding: 15px 5px;
+
+      color: #b9a778;
+      font-size: 15px;
+      font-weight: 600;
+
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: #d6ad48;
+    }
+  }
+
+  .mobile-theme,
+  .mobile-auth-button {
+    width: 100%;
+    padding: 15px 5px;
+
+    text-align: left;
+
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+    color: #b9a778;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+  }
+
+  .mobile-theme:hover,
+  .mobile-auth-button:hover {
+    color: #d6ad48;
+  }
+
+  .mobile-get-started {
+    width: 100%;
+    height: 46px;
+
+    margin-top: 15px;
+
+    background: #d6ad48;
+
+    border: none;
+    border-radius: 8px;
+
+    color: #101010;
+
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+
+    cursor: pointer;
   }
 }

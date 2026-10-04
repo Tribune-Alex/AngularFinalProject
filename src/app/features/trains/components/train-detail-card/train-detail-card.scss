@@ -533,25 +533,154 @@
 
 
 /* =========================
-   MOBILE
+   MOBILE LAYOUT
 ========================= */
 
 @media (max-width: 700px) {
 
-  .schedule-skeleton {
-    grid-template-columns: 1fr;
-    gap: 18px;
+  :host {
+    padding-top: 25px;
+    overflow-x: hidden;
   }
 
-  .schedule-skeleton-arrow {
+  /* TRAIN HEADER */
+
+  .train-details {
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 24px;
+
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .train-image {
+    width: 100%;
+    height: 220px;
+  }
+
+  .train-info h1 {
+    margin: 12px 0 20px;
+    font-size: 34px;
+  }
+
+  .train-number {
+    font-size: 13px;
+  }
+
+  .train-stats {
+    justify-content: space-between;
+    gap: 15px;
+
+    span {
+      font-size: 10px;
+    }
+
+    strong {
+      font-size: 20px;
+    }
+  }
+
+
+  /* TABS */
+
+  .detail-tabs {
+    margin: 35px 20px 0;
+
+    gap: 0;
+  }
+
+  .tab {
+    flex: 1;
+    min-width: 0;
+
+    padding: 16px 5px;
+
+    font-size: 14px;
+  }
+
+
+  /* SCHEDULES */
+
+  .schedule-list {
+    margin: 25px 20px 0;
+  }
+
+  .schedule-card {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+
+    padding: 22px 20px;
+  }
+
+  .route-arrow {
     display: none;
   }
 
-  .schedule-skeleton-text {
-    width: 65%;
+  .station,
+  .departure-time {
+    min-width: 0;
+
+    span {
+      font-size: 10px;
+    }
+
+    strong {
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
   }
 
-  .schedule-skeleton-button {
+  .departure-time {
+    grid-column: 1 / -1;
+  }
+
+  .book-btn {
+    grid-column: 1 / -1;
+
     width: 100%;
+
+    box-sizing: border-box;
+  }
+
+
+  /* COACH TAB */
+
+  .tabs {
+    margin-top: 30px;
+    padding-left: 20px;
+
+    gap: 20px;
+
+    overflow-x: auto;
+  }
+
+  .coach-filters {
+    margin: 22px 20px 0;
+
+    flex-wrap: wrap;
+  }
+
+  .coach-list {
+    margin-top: 25px;
+    padding: 0 20px 30px;
+  }
+
+  .coach-card {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+
+    padding: 20px;
+
+    min-height: auto;
+
+    div:last-child {
+      align-items: flex-start;
+    }
   }
 }

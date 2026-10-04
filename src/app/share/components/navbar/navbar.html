@@ -16,6 +16,9 @@
         </span>
 
     </a>
+    <button class="menu-toggle" type="button" (click)="toggleMenu()" aria-label="Open navigation menu">
+        ☰
+    </button>
 
 
     <!-- CENTER: NAVIGATION -->
@@ -67,3 +70,56 @@
     </div>
 
 </nav>
+
+@if (menuOpen()) {
+    <div class="mobile-menu">
+  
+      <a routerLink="/" (click)="toggleMenu()">
+        Home
+      </a>
+  
+      <a routerLink="/trains" (click)="toggleMenu()">
+        Trains
+      </a>
+  
+      <button
+        class="mobile-theme"
+        type="button"
+        (click)="themeService.toggleTheme()">
+  
+        @if (themeService.isLightMode()) {
+          🌙 Light / Dark
+        } @else {
+          ☀️ Light / Dark
+        }
+  
+      </button>
+  
+      @if (!authService.isLoggedIn()) {
+  
+        <button
+          class="mobile-auth-button"
+          (click)="goLogin(); toggleMenu()">
+          Sign In
+        </button>
+  
+        <button
+          class="mobile-get-started"
+          (click)="goRegister(); toggleMenu()">
+          Get Started
+        </button>
+  
+      }
+  
+      @if (authService.isLoggedIn()) {
+  
+        <button
+          class="mobile-auth-button"
+          (click)="goProfile(); toggleMenu()">
+          My Profile
+        </button>
+  
+      }
+  
+    </div>
+  }

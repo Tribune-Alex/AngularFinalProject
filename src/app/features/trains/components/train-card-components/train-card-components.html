@@ -1,9 +1,34 @@
 <div class="page">
+    <div class="language-switcher">
+
+        <img
+          src="/flags/en.svg"
+          alt="English"
+          title="English"
+          width="40"
+          height="26"
+          style="width: 40px; height: 26px; object-fit: cover;"
+          [class.active]="currentLanguage() === 'en'"
+          (click)="changeLanguage('en')"
+        >
+      
+        <img
+          src="/flags/ka.svg"
+          alt="ქართული"
+          title="ქართული"
+          width="40"
+          height="26"
+          style="width: 40px; height: 26px; object-fit: cover;"
+          [class.active]="currentLanguage() === 'ka'"
+          (click)="changeLanguage('ka')"
+        >
+      
+      </div>
 
     <div class="page-header">
-        <span class="eyebrow">EXPLORE</span>
-        <h1>Train Routes</h1>
-        <p>Find trains by number and view detailed route information.</p>
+        <span class="eyebrow">{{ 'TRAINS.EYEBROW' | translate }}</span>
+        <h1>{{ 'TRAINS.TITLE' | translate }}</h1>
+        <p>{{ 'TRAINS.DESCRIPTION' | translate }}</p>
     </div>
 
     <div class="divider"></div>
@@ -12,22 +37,22 @@
 
         <aside class="sidebar">
             <div class="search-box">
-                <h3>SEARCH</h3>
+                <h3>{{ 'TRAINS.SEARCH' | translate }}</h3>
 
-                <label>TRAIN NUMBER</label>
+                <label>{{ 'TRAINS.TRAIN_NUMBER' | translate }}</label>
 
-                <input type="text" placeholder="e.g. Express, 42" (input)="onSearchInput($event)">
+                <input type="text" [placeholder]="'TRAINS.TRAIN_PLACEHOLDER' | translate" (input)="onSearchInput($event)">
             </div>
 
             <div class="filter-box">
 
-                <h3>FILTER BY ROUTE</h3>
+                <h3>{{ 'TRAINS.FILTER_BY_ROUTE' | translate }}</h3>
 
-                <label>FROM</label>
+                <label>{{ 'TRAINS.FROM' | translate }}</label>
 
                 <select (change)="onFromStationChange($event)">
                     <option value="" [selected]="!fromStationName()">
-                        Any origin
+                        {{ 'TRAINS.ANY_ORIGIN' | translate }}
                     </option>
 
                     @for (station of stations(); track station.id) {
@@ -37,11 +62,11 @@
                     }
                 </select>
 
-                <label>TO</label>
+                <label>{{ 'TRAINS.TO' | translate }}</label>
 
                 <select (change)="onToStationChange($event)">
                     <option value="" [selected]="!toStationName()">
-                        Any destination
+                        {{ 'TRAINS.ANY_DESTINATION' | translate }}
                     </option>
 
                     @for (station of toStations(); track station.id) {
@@ -51,53 +76,49 @@
                     }
                 </select>
                 <button (click)="applyFilter()">
-                    Apply Filter
+                    {{ 'TRAINS.APPLY_FILTER' | translate }}
                 </button>
 
             </div>
         </aside>
-        
+
 
         <main class="content">
             <div class="schedule-search">
-                <input
-                  #scheduleInput
-                  type="text"
-                  placeholder="Search schedules..."
-                  (input)="scheduleSearch.emit(scheduleInput.value)"
-                >
-              </div>
+                <input #scheduleInput type="text" [placeholder]="'TRAINS.SCHEDULE_SEARCH' | translate"
+                    (input)="scheduleSearch.emit(scheduleInput.value)">
+            </div>
 
-              @if (scheduleResults().length > 0) {
+            @if (scheduleResults().length > 0) {
 
-                <div class="schedule-results">
-              
-                  @for (item of scheduleResults(); track item.id) {
-              
-                    <div class="schedule-result-card">
-              
-                      <div class="route">
+            <div class="schedule-results">
+
+                @for (item of scheduleResults(); track item.id) {
+
+                <div class="schedule-result-card">
+
+                    <div class="route">
                         <strong>{{ item.origin }}</strong>
                         <span>→</span>
                         <strong>{{ item.destination }}</strong>
-                      </div>
-              
-                      <div class="time">
-                        {{ item.departureTime }}
-                      </div>
-              
-                      <div class="train-name">
-                        {{ item.trainName }} #{{ item.trainNumber }}
-                      </div>
-              
                     </div>
-              
-                  }
-              
+
+                    <div class="time">
+                        {{ item.departureTime }}
+                    </div>
+
+                    <div class="train-name">
+                        {{ item.trainName }} #{{ item.trainNumber }}
+                    </div>
+
                 </div>
-              
-              }
-              
+
+                }
+
+            </div>
+
+            }
+
 
             <div class="trains">
                 @for (train of trains(); track $index) {
@@ -114,7 +135,7 @@
                             </span>
 
                             <span class="coaches">
-                                {{ train.coachesCount }} coaches
+                                {{ train.coachesCount }} {{ 'TRAINS.COACHES' | translate }}
                             </span>
                         </div>
 
@@ -123,11 +144,11 @@
                         </h3>
 
                         <p class="seats">
-                            {{ train.totalSeats }} seats
+                            {{ train.totalSeats }} {{ 'TRAINS.SEATS' | translate }}
                         </p>
 
                         <button (click)="selectTrain(train.id)">
-                            დეტალური ინფორმაცია
+                            {{ 'TRAINS.DETAILS' | translate }}
                         </button>
 
                     </div>
@@ -142,7 +163,7 @@
 
             <div class="selected-train">
 
-                <span class="eyebrow">SELECTED TRAIN</span>
+                <span class="eyebrow">{{ 'TRAINS.SELECTED_TRAIN' | translate }}</span>
 
                 <h2>
                     {{ train.name }}
@@ -157,7 +178,7 @@
                 <div class="route">
 
                     <div>
-                        <span>FROM</span>
+                        <span>{{ 'TRAINS.FROM' | translate }}</span>
                         <strong>{{ schedule.origin }}</strong>
                     </div>
 
@@ -166,7 +187,7 @@
                     </div>
 
                     <div>
-                        <span>TO</span>
+                        <span>{{ 'TRAINS.TO' | translate }}</span>
                         <strong>{{ schedule.destination }}</strong>
                     </div>
 

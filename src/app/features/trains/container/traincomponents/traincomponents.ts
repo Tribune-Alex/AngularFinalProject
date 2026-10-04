@@ -7,6 +7,7 @@ import { AiChat } from '../../components/ai-chat/ai-chat';
 import { Authservice } from '../../../auth/services/authservice';
 
 
+
 @Component({
   imports: [TrainCardComponents,AiChat],
   selector: 'app-traincomponents',
@@ -32,10 +33,6 @@ export class Traincomponents {
     stream: () => this.trainService.getTrains(),
   });
 
-  // selectedTrain = rxResource({
-  //   params: () => this.selectedTrainId(),
-  //   stream: ({ params }) => this.trainService.getTrainById(params),
-  // });
 
   selectTrain(id: number): void {
     this.router.navigate(['/train', id]);
@@ -146,8 +143,19 @@ export class Traincomponents {
   });
 
   searchSchedule(value: string): void {
-    this.scheduleQuery.set(value);
+    const normalizedValue = value.trim().toLowerCase();
+  
+    const translatedValue =
+      this.georgianSearchMap[normalizedValue] ?? value;
+  
+    this.scheduleQuery.set(translatedValue);
   }
 
- 
+  private readonly georgianSearchMap: Record<string, string> = {
+    'თბილისი': 'Tbilisi',
+    'ბათუმი': 'Batumi',
+    'ქუთაისი': 'Kutaisi',
+    'ზუგდიდი': 'Zugdidi',
+    'ფოთი': 'Poti'
+  };
 }

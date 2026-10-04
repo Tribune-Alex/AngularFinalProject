@@ -782,3 +782,73 @@ button:hover {
     font-size: 28px;
   }
 }
+
+@media (max-width: 600px) {
+
+  .login-page {
+    width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  .login-right {
+    width: 100%;
+    min-width: 0;
+
+    padding: 35px 20px;
+
+    box-sizing: border-box;
+  }
+
+  .login-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+  }
+
+  form {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .input-box {
+    width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+  }
+
+  .input-box input {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .login-options {
+    width: 100%;
+    gap: 15px;
+  }
+
+  .remember,
+  .forgot-password {
+    font-size: 12px;
+  }
+
+  .forgot-password {
+    white-space: nowrap;
+  }
+
+  form > button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .divider {
+    width: 100%;
+  }
+
+  .login-content h2 {
+    font-size: 28px;
+  }
+}
