@@ -208,7 +208,7 @@ export class Trainservice {
       localStorage.getItem('accessToken') ??
       sessionStorage.getItem('accessToken');
     return this.http.post<AiResponse>(
-      'http://localhost:5678/webhook/trains-ai-agent',
+      'https://rogue001.app.n8n.cloud/webhook/trains-ai-agent',
       {
         message: message,
         history: history,
